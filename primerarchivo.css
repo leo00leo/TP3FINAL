@@ -1,0 +1,347 @@
+body{
+    background-image:url('FONDOLI.png');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    min-height:100vh;
+
+    font-family:'Segoe UI',sans-serif;
+    text-align:center;
+    overflow-x:hidden;
+
+    position:relative;
+}
+
+h1{
+    color:white;
+    font-family:"Lexend Mega",sans-serif;
+
+    text-shadow:
+    0 0 10px white,
+    0 0 20px white,
+    0 0 40px gold;
+
+    animation:glow 3s infinite alternate;
+}
+
+h2{
+    color:white;
+}
+
+@keyframes glow{
+
+    from{
+        text-shadow:
+        0 0 10px white,
+        0 0 20px white;
+    }
+
+    to{
+        text-shadow:
+        0 0 20px white,
+        0 0 40px gold,
+        0 0 80px gold;
+    }
+
+}
+
+#elija{
+    text-align:center;
+    padding-top:40px;
+}
+
+#elija img{
+
+    margin:20px;
+
+    transition:.4s;
+
+    filter:
+    drop-shadow(0 0 15px rgba(255,255,255,.2));
+
+    animation:flotar 4s ease-in-out infinite;
+}
+
+#elija img:nth-child(2){
+    animation-delay:.5s;
+}
+
+#elija img:hover{
+
+    transform:
+    scale(1.12)
+    rotate(3deg);
+
+    filter:
+    drop-shadow(0 0 25px rgba(255,255,255,.6));
+
+}
+
+@keyframes flotar{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-15px);
+    }
+
+}
+
+
+
+#loader{
+
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    background-image:url('FONDOLI.png');
+    background-size:cover;
+    background-position:center;
+
+    z-index:9999;
+}
+
+.spinner{
+
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    border:8px solid rgba(255,255,255,.2);
+    border-top:8px solid white;
+
+    animation:girar 1s linear infinite;
+
+    margin-bottom:30px;
+}
+
+@keyframes girar{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+
+.contenedor{
+
+    width:420px;
+
+    margin:80px auto;
+
+    padding:45px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+    0 8px 32px rgba(0,0,0,.5);
+
+    animation:aparecer 1s ease;
+}
+
+@keyframes aparecer{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+button{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:15px 40px;
+
+    margin:10px;
+
+    border:none;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.08);
+}
+
+button:active{
+    transform:scale(.95);
+}
+
+button::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:100%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.4),
+        transparent
+    );
+
+    transition:.6s;
+}
+
+button:hover::before{
+    left:120%;
+}
+
+
+.boca{
+
+    background:
+    linear-gradient(
+        135deg,
+        #0044ff,
+        #002b99
+    );
+
+    color:#ffd700;
+}
+
+.boca:hover{
+
+    box-shadow:
+    0 0 10px #0044ff,
+    0 0 30px #0044ff,
+    0 0 60px #0044ff;
+}
+
+/* ===== RIVER ===== */
+
+.river{
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff3d3d,
+        #b30000
+    );
+
+    color:white;
+}
+
+.river:hover{
+
+    box-shadow:
+    0 0 10px red,
+    0 0 30px red,
+    0 0 60px red;
+}
+
+/* ===== RESULTADOS ===== */
+
+#resultadoRiver,
+#resultadoBoca{
+
+    margin-top:15px;
+
+    transition:.3s;
+
+    text-shadow:
+    0 0 10px rgba(255,255,255,.4);
+}
+
+/* ===== FUTBOL 11 ===== */
+
+.futbol11-section{
+    margin-top:30px;
+}
+
+.futbol11-btn{
+
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-family:"Lexend Mega",sans-serif;
+
+    padding:25px 40px;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #1a472a,
+        #0d2b18
+    );
+
+    transition:.3s;
+
+    box-shadow:
+    0 6px 20px rgba(0,0,0,.4);
+}
+
+.futbol11-btn:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.05);
+
+    box-shadow:
+    0 0 20px rgba(0,255,100,.5),
+    0 0 40px rgba(0,255,100,.3);
+}
+
+.futbol11-badge{
+
+    background:rgba(255,255,255,.15);
+
+    padding:5px 10px;
+
+    border-radius:8px;
+
+    font-size:11px;
+}

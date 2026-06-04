@@ -1,0 +1,370 @@
+body{
+    background-image:url("fondo.png");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    color:white;
+    font-family:"Quicksand",sans-serif;
+    text-align:center;
+
+    margin:0;
+    padding:30px;
+}
+
+h1{
+    color:white;
+    font-size:3rem;
+    letter-spacing:4px;
+
+    text-shadow:
+    0 0 15px rgba(255,255,255,.8),
+    0 0 25px rgba(255,215,0,.7);
+}
+
+h2,h3{
+    line-height:1.7;
+    color:white;
+}
+
+.contenedor-imagen{
+    width:70%;
+
+    margin:auto;
+    padding:25px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(12px);
+
+    border:2px solid rgba(255,215,0,.35);
+
+    border-radius:25px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.35);
+}
+
+.contenedor-imagen img{
+    width:100%;
+    max-width:100%;
+    border-radius:15px;
+}
+
+.tabla{
+    width:90%;
+    max-width:1000px;
+
+    margin:25px auto;
+
+    border-collapse:separate;
+    border-spacing:0;
+
+    overflow:hidden;
+    border-radius:20px;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.4);
+}
+
+.tabla th{
+    background:rgba(0, 59, 160, 0.096);
+
+    color:white;
+
+    padding:18px;
+
+    font-size:1rem;
+    letter-spacing:1px;
+}
+
+.tabla td{
+    background:rgba(223, 206, 59, 0.12);
+
+    border:1px solid rgba(255,215,0,.25);
+
+    color:white;
+
+    padding:18px;
+    font-weight:600;
+}
+
+.tabla tr:hover td{
+    background:rgba(255,215,0,.15);
+}
+
+.brillo{
+    margin-top:40px;
+
+    border-radius:20px;
+
+    transition:.5s;
+
+    box-shadow:
+    0 0 25px rgba(0,0,0,.5);
+}
+
+.brillo:hover{
+    transform:scale(1.05);
+
+    box-shadow:
+    0 0 35px rgba(255,255,255,.4),
+    0 0 70px rgba(255,215,0,.7);
+}
+
+.transitions-section{
+    padding:20px;
+    text-align:center;
+}
+
+.transition-button{
+    width:90%;
+    max-width:1200px;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(14px);
+
+    border:2px solid rgba(255,215,0,.35);
+
+    color:white;
+
+    font-size:16px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.4),
+    0 0 20px rgba(255,215,0,.15);
+
+    transition:.4s;
+}
+
+.transition-button:hover{
+    transform:scale(1.02);
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.6),
+    0 0 35px rgba(255,215,0,.4);
+}
+
+.transitions-nombre{
+    padding:20px;
+    text-align:center;
+}
+
+.volver{
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    background:rgba(0,60,160,.85);
+
+    color:white;
+
+    padding:12px 20px;
+
+    border-radius:15px;
+
+    text-decoration:none;
+    font-weight:bold;
+
+    border:1px solid rgba(255,215,0,.3);
+
+    box-shadow:
+    0 5px 20px rgba(0,0,0,.4);
+
+    transition:.3s;
+}
+
+.volver:hover{
+    background:rgba(255,215,0,.95);
+
+    color:#003c9f;
+
+    transform:scale(1.08);
+}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+.match-card{
+    width:100%;
+    max-width:900px;
+    margin:20px auto;
+    background:#d6e2f0;
+    border:1px solid #7c9bbd;
+}
+
+
+.match-header{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    background:#006996;
+    color:#fff;
+    padding:15px 20px;
+    text-align:center;
+}
+
+.team h2{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.score{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.match-info{
+    background:#006996;
+    color:#fff;
+    padding:0 15px 10px;
+    font-size:14px;
+    line-height:1.5;
+}
+
+
+
+.lineups,
+.subs{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.lineups td,
+.subs td{
+    width:50%;
+    padding:6px 10px;
+    border-bottom:1px solid #7c9bbd;
+    vertical-align:middle;
+}
+
+.lineups tr:last-child td,
+.subs tr:last-child td{
+    border-bottom:none;
+}
+
+
+
+.player{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.number{
+    width:24px;
+    text-align:right;
+    font-weight:normal;
+}
+
+.name{
+    color:#1a4fb6;
+}
+
+.name.red{
+    color:#c12d2d;
+}
+
+
+
+.pos{
+    display:inline-block;
+    min-width:32px;
+    text-align:center;
+    color:#fff;
+    font-size:10px;
+    font-weight:bold;
+    padding:2px 4px;
+    border-radius:2px;
+}
+
+.por{
+    background:#ff8c42;
+}
+
+.def{
+    background:#5b9ee8;
+}
+
+.med{
+    background:#58b958;
+}
+
+.del{
+    background:#e74d4d;
+}
+
+
+
+.coaches{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    border-top:1px solid #7c9bbd;
+    border-bottom:1px solid #7c9bbd;
+}
+
+.coaches div{
+    padding:8px;
+}
+
+.coaches strong{
+    color:#000;
+}
+
+
+
+.section-title{
+    text-align:center;
+    font-weight:bold;
+    font-size:16px;
+    padding:8px;
+    border-bottom:1px solid #7c9bbd;
+    border-top:1px solid #7c9bbd;
+    background:#d6e2f0;
+}
+
+
+
+.goals{
+    padding:10px 20px;
+    text-align:center;
+    line-height:1.8;
+}
+
+
+.cards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    padding:10px 20px;
+}
+
+.cards div{
+    line-height:1.8;
+}
+
+
+
+.referee{
+    border-top:1px solid #7c9bbd;
+    padding:12px;
+    text-align:center;
+    line-height:1.8;
+}
+
+
+
+.lineups tr:hover td,
+.subs tr:hover td{
+    background:#cbdced;
+}

@@ -1,0 +1,260 @@
+
+body{
+    background-image: url("japon.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    margin: 0;
+    padding: 30px;
+
+    text-align: center;
+    font-family: "Quicksand", sans-serif;
+    color: white;
+}
+
+
+h1{
+    font-size: 3rem;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px rgba(250, 0, 0, 0.7);
+}
+
+h2,h3{
+    margin: 10px;
+    line-height: 1.5;
+}
+
+.transitions-section{
+    margin: 30px auto;
+}
+
+
+.transition-button{
+    width: 90%;
+    max-width: 1200px;
+
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 25px;
+
+    padding: 30px;
+    color: white;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.4),
+        inset 0 0 20px rgba(255,255,255,.05);
+
+    transition: all .4s ease;
+}
+
+.transition-button:hover{
+    transform: scale(1.02);
+    box-shadow:
+        0 12px 40px rgba(0,0,0,.6),
+        0 0 25px rgba(255,255,255,.2);
+}
+
+
+table{
+    width: 95%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+table td{
+    border: 2px solid hsl(354, 87%, 50%);
+    padding: 20px;
+
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+
+    border: 1px solid rgba(255,255,255,.2);
+    color: white;
+    font-weight: bold;
+}
+
+img{
+    border-radius: 15px;
+}
+
+table img{
+    max-width: 100%;
+    height: auto;
+
+    transition: .4s;
+}
+
+table img:hover{
+    transform: scale(1.03);
+}
+
+.brillo{
+    margin-top: 40px;
+    border-radius: 20px;
+
+    transition: .5s;
+
+    box-shadow:
+        0 0 30px rgba(0,0,0,.5);
+}
+
+.brillo:hover{
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 40px rgba(255,255,255,.4),
+        0 0 70px rgba(255,0,0,.3);
+}
+
+
+.volver{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+    background: rgba(255,255,255,.15);
+    backdrop-filter: blur(10px);
+
+    color: white;
+
+    padding: 12px 20px;
+
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,.2);
+
+    text-decoration: none;
+    font-weight: bold;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,.3);
+
+    transition: .3s;
+}
+
+.volver:hover{
+    transform: scale(1.08);
+
+    background: rgba(220,0,0,.75);
+    color: white;
+}
+
+
+body::before{
+    content:"";
+    position: fixed;
+    inset: 0;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,.45),
+        rgba(0,0,0,.55)
+    );
+
+    z-index: -1;
+}
+.match-card{
+    max-width:900px;
+    margin:20px auto;
+    background:#c9d8ea;
+    border:1px solid #7f9dbd;
+}
+
+.match-header{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    background:#006d9b;
+    color:white;
+    text-align:center;
+    padding:15px;
+}
+
+.team img{
+    width:60px;
+    margin-bottom:8px;
+}
+
+.team h2{
+    margin:0;
+    font-size:24px;
+}
+
+.score{
+    display:block;
+    font-size:32px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.match-info{
+    background:#006d9b;
+    color:white;
+    padding:10px;
+    font-size:18px;
+}
+
+.lineups,
+.subs{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.lineups td,
+.subs td{
+    width:50%;
+    padding:8px 12px;
+    border-bottom:1px solid #7f9dbd;
+}
+
+.player{
+    color:#184db6;
+}
+
+.pos{
+    float:right;
+    font-size:11px;
+    padding:2px 6px;
+    color:white;
+    border-radius:3px;
+}
+
+.por{background:#f58c32;}
+.def{background:#5b9be0;}
+.med{background:#5cb85c;}
+.del{background:#e95d5d;}
+
+.coaches{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    padding:10px;
+    border-top:1px solid #7f9dbd;
+}
+
+.section-title{
+    text-align:center;
+    font-weight:bold;
+    font-size:28px;
+    padding:12px;
+    border-top:1px solid #7f9dbd;
+}
+
+.goals{
+    text-align:center;
+    padding:12px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    padding:15px;
+}
+
+.referee{
+    text-align:center;
+    padding:15px;
+    border-top:1px solid #7f9dbd;
+}

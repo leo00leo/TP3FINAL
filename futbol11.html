@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boca y River XI - Futbol 11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #060e18; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 24px 12px; font-family: 'Inter', sans-serif; }
+  .f11-wrap { background: #000000; border-radius: 16px; padding: 16px; color: white; width: 100%; max-width: 800px; }
+  .f11-title { font-family: 'Bebas Neue', sans-serif; text-align: center; font-size: 28px; letter-spacing: 3px; color: #ffffff; margin: 0 0 12px; }
+  .pitch { background: #1a472a; border-radius: 12px; position: relative; width: 100%; padding-bottom: 75%; border: 2px solid #2d6a3e; }
+  .pitch-inner { position: absolute; inset: 0; }
+  .pitch-line { position: absolute; border: 1px solid rgba(255,255,255,0.15); }
+  .midline { top: 50%; left: 5%; right: 5%; height: 0; }
+  .center-circle { top: 50%; left: 50%; width: 60px; height: 60px; border-radius: 50%; transform: translate(-50%, -50%); }
+  .penalty-top { top: 2%; left: 25%; right: 25%; height: 15%; }
+  .penalty-bot { bottom: 2%; left: 25%; right: 25%; height: 15%; }
+  .pos-slot { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 2; cursor: default; }
+  .pos-circle { width: 46px; height: 46px; border-radius: 50%; border: 2px solid rgba(13,27,42,0.85); background: rgba(13,27,42,0.85); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: #ffffff; letter-spacing: 0.5px; transition: all 0.2s; }
+  .pos-circle.filled { border-color: #ffffff; background: rgba(13,27,42,0.85); color: white; font-size: 9px; text-align: center; line-height: 1.2; padding: 2px; }
+  .pos-circle.active-slot { outline: 2px solid white; outline-offset: 2px; }
+  .pos-label { font-size: 9px; color: rgba(255,255,255,0.6); margin-top: 3px; font-weight: 500; }
+  .bottom-bar { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+  .badge { background: #000000; border-radius: 10px; padding: 8px 14px; display: flex; align-items: center; gap: 8px; min-width: 130px; }
+  .badge-icon { font-size: 28px; }
+  .badge-text { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 1px; color: white; line-height: 1.1; }
+  .input-wrap { flex: 1; position: relative; }
+  .player-input { width: 100%; background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 10px 14px; color: white; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s; }
+  .player-input:focus { border-color: #ffffff; }
+  .player-input::placeholder { color: rgba(255,255,255,0.35); }
+  .autocomplete { position: absolute; bottom: 100%; left: 0; right: 0; background: #1a2634; border: 1px solid rgba(255,255,255,0.4); border-radius: 8px; margin-bottom: 4px; overflow: hidden; z-index: 10; }
+  .autocomplete-item { padding: 9px 14px; font-size: 13px; cursor: pointer; color: rgba(255,255,255,0.85); transition: background 0.1s; }
+  .autocomplete-item:hover, .autocomplete-item.active { background: rgba(255,255,255,0.2); color: white; }
+  .active-pos-label { font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; min-width: 80px; }
+  .active-pos-name { color: #ffffff; font-weight: 600; font-size: 13px; text-align: center; }
+  .progress { display: flex; gap: 4px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+  .prog-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); transition: background 0.3s; }
+  .prog-dot.filled { background: #ffffff; }
+  .reset-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: rgba(255,255,255,0.5); font-size: 11px; padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+  .reset-btn:hover { border-color: #ffffff; color: #ffffff; }
+  .timer-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; gap: 10px; }
+  .timer-display { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: #ffffff; min-width: 62px; text-align: center; transition: color 0.3s; }
+  .timer-display.warning { color: #ff9900; }
+  .timer-display.danger { color: #ff3333; }
+  .timer-track { flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+  .timer-fill { height: 100%; background: #ffffff; border-radius: 3px; transition: width 1s linear, background 0.3s; }
+  .timer-fill.warning { background: #ff9900; }
+  .timer-fill.danger { background: #ff3333; }
+  .timer-btn { background: transparent; border: 1px solid rgba(255,255,255,0.25); border-radius: 6px; color: rgba(255,255,255,0.6); font-size: 13px; padding: 3px 9px; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+  .timer-btn:hover { border-color: #fff; color: #fff; }
+  .volver {position: fixed;top: 20px;left: 20px;display: inline-flex;align-items: center;gap: 12px;background: linear-gradient(135deg, #1a472a, #0d2b18);color: white;text-decoration: none;padding: 18px 36px;border-radius: 16px;font-family: 'Lexend Mega', sans-serif;font-size: 15px;font-weight: 700;letter-spacing: 1px;transition: 0.3s ease;box-shadow: 0 6px 20px rgba(0,0,0,0.4);border: 2px solid rgba(255,255,255,0.1);} 
+  .volver:hover {transform: scale(1.06);box-shadow:0 0 15px rgba(255,255,255,0.2),0 0 35px rgba(0,200,80,0.4),0 0 60px rgba(0,200,80,0.2);border-color: rgba(255,255,255,0.3);}
+
+  #result-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  #result-overlay.show { display: flex; }
+  #result-overlay.victory { background: radial-gradient(ellipse at center, rgba(0,80,0,0.97) 0%, rgba(0,30,0,0.99) 100%); }
+  #result-overlay.defeat  { background: radial-gradient(ellipse at center, rgba(80,0,0,0.97) 0%, rgba(20,0,0,0.99) 100%); }
+
+  .result-emoji { font-size: 80px; animation: pop 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both; }
+  .result-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 4px;
+    margin: 12px 0 6px;
+    animation: slideUp 0.5s 0.15s both;
+  }
+  .result-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 28px;
+    animation: slideUp 0.5s 0.25s both;
+  }
+  .result-btn {
+    background: white;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    animation: slideUp 0.5s 0.35s both;
+    transition: transform 0.15s;
+  }
+  .result-btn:hover { transform: scale(1.05); }
+
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+    opacity: 0;
+  }
+
+  @keyframes pop {
+    0%   { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes slideUp {
+    0%   { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0);    opacity: 1; }
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg);   opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%     { transform: translateX(-12px); }
+    40%     { transform: translateX(12px); }
+    60%     { transform: translateX(-8px); }
+    80%     { transform: translateX(8px); }
+  }
+  .shake { animation: shake 0.5s ease both; }
+</style>
+</head>
+<body>
+  <a href="primerarchivo.html" class="volver">⬅ Inicio</a>
+
+<div id="result-overlay">
+  <div class="result-emoji" id="result-emoji"></div>
+  <div class="result-title" id="result-title"></div>
+  <div class="result-sub"   id="result-sub"></div>
+  <button class="result-btn" onclick="closeResult()">Jugar de nuevo</button>
+</div>
+
+<div class="f11-wrap">
+  <div class="f11-title">⚽ Boca y River</div>
+
+  <div class="pitch">
+    <div class="pitch-inner">
+      <div class="pitch-line midline"></div>
+      <div class="pitch-line center-circle"></div>
+      <div class="pitch-line penalty-top"></div>
+      <div class="pitch-line penalty-bot"></div>
+      <div id="slots-container"></div>
+    </div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+
+  <div class="timer-bar">
+    <div class="timer-display" id="timer-display">1:30</div>
+    <div class="timer-track"><div class="timer-fill" id="timer-fill" style="width:100%"></div></div>
+    <button class="timer-btn" id="timer-btn" onclick="toggleTimer()">▶ Start</button>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="badge">
+      <div class="badge-icon">⚽</div>
+      <div class="badge-text">Mejor 11<br>Boca y River</div>
+    </div>
+    <div class="input-wrap">
+      <div class="autocomplete" id="autocomplete" style="display:none;"></div>
+      <input class="player-input" id="player-input" placeholder="Escribe un jugador..." autocomplete="off" />
+    </div>
+    <div>
+      <div class="active-pos-label">Posición:</div>
+      <div class="active-pos-name" id="active-pos-name">—</div>
+    </div>
+  </div>
+
+  <div style="text-align:right; margin-top:8px;">
+    <button class="reset-btn" onclick="resetAll()">↺ Reiniciar</button>
+  </div>
+</div>
+
+<script>
+const POSITIONS = [
+  { id: 'ST',  label: 'ST',  left: 50, top: 12 },
+  { id: 'LW',  label: 'LW',  left: 12, top: 24 },
+  { id: 'RW',  label: 'RW',  left: 88, top: 24 },
+  { id: 'CAM', label: 'CAM', left: 50, top: 35 },
+  { id: 'CM1', label: 'CM',  left: 30, top: 46 },
+  { id: 'CM2', label: 'CM',  left: 70, top: 46 },
+  { id: 'LB',  label: 'LB',  left: 12, top: 62 },
+  { id: 'CB1', label: 'CB',  left: 33, top: 72 },
+  { id: 'CB2', label: 'CB',  left: 67, top: 72 },
+  { id: 'RB',  label: 'RB',  left: 88, top: 62 },
+  { id: 'GK',  label: 'GK',  left: 50, top: 86 },
+];
+
+const PLAYERS = {
+  'ST': ['Miguel Merentiel','Edinson Cavani','Milton Giménez','Adam Bareiro','Iker Zufiaurre','Ángel Romero','Lucas Janson','Juan Pussetto','Joaquín Piñeyro','Miguel Ventos','Joaquín Ruíz','Gonzalo Gelini','Ezequiel González','Kevin Ferreira','Rodrigo Bacidalupe','Maximiliano Salas','Sebastián Driussi','Facundo Colidio','Agustín Ruberto','Joaquin Freitas','Ian Subiabre','Felipe Esquivel','Alex Woiski','Jonathan Spiff'],
+  'LW': ['Exequiel Zeballos','Kevin Zenón','Alan Velasco','Malcom Braida','Lucas Janson','Ángel Romero','Iker Zufiaurre','Facundo Colidio','Maximiliano Salas','Ian Subiabre','Joaquin Freitas','Alex Woiski'],
+  'RW': ['Exequiel Zeballos','Kevin Zenón','Carlos Palacios','Ángel Romero','Alan Velasco','Malcom Braida','Lucas Janson','Facundo Colidio','Maximiliano Salas','Ian Subiabre','Joaquin Freitas'],
+  'CAM': ['Carlos Palacios','Alan Velasco','Agustín Martegani','Kevin Zenón','Tomás Aranda','Camilo Rey','Juan Fernando Quintero','Kendry Páez','Juan Meza','Tomás Galván','Giuliano Galoppo'],
+  'CM1': ['Leandro Paredes','Rodrigo Battaglia','Ander Herrera','Tomás Belmonte','William Alarcón','Milton Delgado','Santiago Ascacibar','Tomás Aranda','Aníbal Moreno','Fausto Vera','Kevin Castaño','Maximiliano Meza','Agustín De La Cuesta','Lautaro Pereyra','Santiago Lencina','Lucas Silva','Brian Gutiérrez'],
+  'CM2': ['Leandro Paredes','Rodrigo Battaglia','Ander Herrera','Tomás Belmonte','William Alarcón','Milton Delgado','Santiago Ascacibar','Camilo Rey','Aníbal Moreno','Fausto Vera','Kevin Castaño','Maximiliano Meza','Agustín De La Cuesta','Lautaro Pereyra','Santiago Lencina','Lucas Silva','Brian Gutiérrez'],
+  'LB': ['Lautaro Blanco','Ayrton Costa','Malcom Braida','Marcos Acuña','Matías Viña'],
+  'CB1': ['Lautaro Di Lollo','Marco Pellegrino','Jorge Figal','Ayrton Costa','Facundo Herrera','Matías Satas','Juan Portillo','Lautaro Rivero','Paulo Díaz','Germán Pezzella','Lucas Martínez Quarta','Facundo González','Ulises Giménez'],
+  'CB2': ['Marco Pellegrino','Lautaro Di Lollo','Jorge Figal','Ayrton Costa','Facundo Herrera','Matías Satas','Juan Portillo','Lautaro Rivero','Paulo Díaz','Germán Pezzella','Lucas Martínez Quarta','Facundo González','Ulises Giménez'],
+  'RB': ['Marcelo Weigandt','Juan Barinaga','Dylan Gorosito','Fabricio Bustos','Gonzalo Montiel','Tobías Palacio'],
+  'GK': ['Agustín Marchesín','Leandro Brey','Javier García','Fernando Rodríguez','Franco Armani','Ezequiel Centurión','Santiago Beltrán','Franco Jaroszewicz']
+};
+
+let filled = {};
+let filledFullNames = {}; // posición → nombre completo
+let filledNames = new Set(); // nombres ya usados
+let activePos = null;
+let acIndex = -1;
+
+// ========== SLOTS ==========
+function buildSlots() {
+  const container = document.getElementById('slots-container');
+  container.innerHTML = '';
+  POSITIONS.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'pos-slot';
+    div.style.left = p.left + '%';
+    div.style.top = p.top + '%';
+    div.id = 'slot-' + p.id;
+    const circle = document.createElement('div');
+    circle.className = 'pos-circle' + (filled[p.id] ? ' filled' : '') + (p.id === activePos ? ' active-slot' : '');
+    circle.id = 'circle-' + p.id;
+    circle.textContent = filled[p.id] ? filled[p.id] : p.label;
+    circle.title = filled[p.id] || p.label;
+    const lbl = document.createElement('div');
+    lbl.className = 'pos-label';
+    lbl.textContent = p.label;
+    div.appendChild(circle);
+    div.appendChild(lbl);
+    container.appendChild(div);
+  });
+  buildProgress();
+}
+
+function buildProgress() {
+  const pg = document.getElementById('progress');
+  pg.innerHTML = '';
+  POSITIONS.forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'prog-dot' + (filled[p.id] ? ' filled' : '');
+    pg.appendChild(d);
+  });
+}
+
+function selectPos(id) {
+  activePos = id;
+  const input = document.getElementById('player-input');
+  input.value = '';
+  input.placeholder = 'Jugador para ' + id.replace(/[0-9]/g,'') + '...';
+  input.focus();
+  document.getElementById('active-pos-name').textContent = id.replace(/[0-9]/g,'');
+  hideAC();
+  POSITIONS.forEach(p => {
+    const c = document.getElementById('circle-' + p.id);
+    if (c) c.classList.toggle('active-slot', p.id === id);
+  });
+}
+
+function hideAC() {
+  document.getElementById('autocomplete').style.display = 'none';
+  acIndex = -1;
+}
+
+function showAC(items) {
+  const ac = document.getElementById('autocomplete');
+  if (!items.length) { hideAC(); return; }
+  ac.innerHTML = '';
+  ac.style.display = 'block';
+  items.forEach(name => {
+    const d = document.createElement('div');
+    d.className = 'autocomplete-item';
+    d.textContent = name;
+    d.onmousedown = e => { e.preventDefault(); confirmPlayer(name); };
+    ac.appendChild(d);
+  });
+}
+
+function confirmPlayer(name) {
+  if (!activePos) return;
+  // Si había un jugador antes en esta posición, liberarlo
+  const oldName = Object.keys(filled).length > 0 ? filledFullNames[activePos] : null;
+  if (oldName) filledNames.delete(oldName);
+  filled[activePos] = abbreviateName(name);
+  filledFullNames[activePos] = name; // guardar nombre completo para poder liberarlo
+  filledNames.add(name);
+  buildSlots();
+  hideAC();
+  document.getElementById('player-input').value = '';
+  const next = POSITIONS.find(p => !filled[p.id]);
+  if (next) {
+    selectPos(next.id);
+  } else {
+    activePos = null;
+    document.getElementById('active-pos-name').textContent = '✓ ¡Listo!';
+    document.getElementById('player-input').placeholder = '¡Equipo armado!';
+    document.getElementById('player-input').blur();
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timer-btn').textContent = '✓ Listo';
+    showVictory();
+  }
+}
+
+function abbreviateName(name) {
+  const parts = name.split(' ');
+  if (parts.length === 1) return name;
+  if (name.length <= 10) return name;
+  return parts[parts.length - 1];
+}
+
+function resetAll() {
+  filled = {};
+  filledFullNames = {};
+  filledNames = new Set();
+  activePos = null;
+  buildSlots();
+  document.getElementById('active-pos-name').textContent = '—';
+  document.getElementById('player-input').value = '';
+  document.getElementById('player-input').placeholder = 'Escribe un jugador...';
+  document.getElementById('player-input').disabled = false;
+  hideAC();
+  resetTimer();
+  selectPos('GK');
+}
+
+document.getElementById('player-input').addEventListener('input', function() {
+  if (!activePos) return;
+  const val = this.value.trim().toLowerCase();
+  if (!val) { hideAC(); return; }
+  const pool = PLAYERS[activePos] || [];
+  const matches = pool.filter(n => n.toLowerCase().includes(val) && !filledNames.has(n)).slice(0, 5);
+  showAC(matches);
+  acIndex = -1;
+});
+
+document.getElementById('player-input').addEventListener('keydown', function(e) {
+  const ac = document.getElementById('autocomplete');
+  const items = ac.querySelectorAll('.autocomplete-item');
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    acIndex = Math.min(acIndex + 1, items.length - 1);
+    items.forEach((it, i) => it.classList.toggle('active', i === acIndex));
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    acIndex = Math.max(acIndex - 1, 0);
+    items.forEach((it, i) => it.classList.toggle('active', i === acIndex));
+  } else if (e.key === 'Enter') {
+    if (acIndex >= 0 && items[acIndex]) confirmPlayer(items[acIndex].textContent);
+  } else if (e.key === 'Escape') {
+    hideAC();
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.input-wrap')) hideAC();
+});
+
+// ========== TIMER ==========
+const TOTAL_TIME = 90;
+let timeLeft = TOTAL_TIME;
+let timerInterval = null;
+let timerRunning = false;
+
+function updateTimerUI() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  const display = document.getElementById('timer-display');
+  const fill = document.getElementById('timer-fill');
+  display.textContent = m + ':' + String(s).padStart(2, '0');
+  const pct = (timeLeft / TOTAL_TIME) * 100;
+  fill.style.width = pct + '%';
+  const isWarning = timeLeft <= 30 && timeLeft > 10;
+  const isDanger  = timeLeft <= 10;
+  display.className = 'timer-display' + (isDanger ? ' danger' : isWarning ? ' warning' : '');
+  fill.className    = 'timer-fill'    + (isDanger ? ' danger' : isWarning ? ' warning' : '');
+}
+
+function toggleTimer() {
+  const btn = document.getElementById('timer-btn');
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    btn.textContent = '▶ Start';
+  } else {
+    if (timeLeft === 0) resetTimer();
+    timerRunning = true;
+    btn.textContent = '⏸ Pause';
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerUI();
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        document.getElementById('timer-btn').textContent = '↺ Reset';
+        document.getElementById('player-input').disabled = true;
+        document.getElementById('player-input').placeholder = '⏱ ¡Tiempo!';
+        document.getElementById('active-pos-name').textContent = '⏱ Stop';
+        showDefeat();
+      }
+    }, 1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timeLeft = TOTAL_TIME;
+  updateTimerUI();
+  document.getElementById('timer-btn').textContent = '▶ Start';
+}
+
+// ========== ANIMACIONES ==========
+function spawnConfetti() {
+  const overlay = document.getElementById('result-overlay');
+  const colors = ['#FFD700','#ffffff','#00c853','#40c4ff','#ff4081','#ffd740'];
+  for (let i = 0; i < 80; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.top = '-10px';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.width  = (6 + Math.random() * 8) + 'px';
+    el.style.height = (6 + Math.random() * 8) + 'px';
+    el.style.animationDuration = (1.5 + Math.random() * 2.5) + 's';
+    el.style.animationDelay   = (Math.random() * 1.2) + 's';
+    overlay.appendChild(el);
+    setTimeout(() => el.remove(), 5000);
+  }
+}
+
+function showVictory() {
+  const overlay = document.getElementById('result-overlay');
+  const filled_count = Object.keys(filled).length;
+  document.getElementById('result-emoji').textContent = '🏆';
+  document.getElementById('result-title').textContent = '¡CAMPEÓN!';
+  document.getElementById('result-sub').textContent   = '¡Armaste el equipo completo a tiempo! ' + filled_count + '/11 jugadores.';
+  overlay.className = 'show victory';
+  spawnConfetti();
+}
+
+function showDefeat() {
+  const overlay = document.getElementById('result-overlay');
+  const done = Object.keys(filled).length;
+  document.getElementById('result-emoji').textContent = '😤';
+  document.getElementById('result-title').textContent = '¡SE ACABÓ!';
+  document.getElementById('result-sub').textContent   = 'Te quedaste en ' + done + '/11. ¡Faltó más velocidad!';
+  overlay.className = 'show defeat';
+  overlay.classList.add('shake');
+  setTimeout(() => overlay.classList.remove('shake'), 600);
+}
+
+function closeResult() {
+  document.getElementById('result-overlay').className = '';
+  resetAll();
+}
+
+// ========== INICIO ==========
+buildSlots();
+selectPos('GK');
+</script>
+</body>
+</html>

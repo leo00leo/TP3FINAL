@@ -1,0 +1,374 @@
+body {
+    background-image: url('fondo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: hsl(0, 0%, 100%);
+  }
+  #escudo {
+    width: 18%;
+    margin: 3% auto;
+    height: 44vh;
+    background-color: hsl(46, 100%, 49%);
+    border-radius: 30px;
+    text-align: center;
+  }
+  table, th, td {
+    border: 3px solid hsl(46, 100%, 49%);
+  }
+  table {
+    border-collapse: collapse;
+
+  }
+  #titulo {
+    width: 16%;
+    margin: 3% auto;
+    height: 5vh;
+    background-color: hsl(46, 100%, 49%);
+    border-radius: 10px;
+   text-align: center;
+  }
+    #parrafo {
+    height: 70vh;
+    border-radius: 10px;
+
+  }
+
+  #escudos {
+    width: 46%;
+    margin: 15% auto;
+    height: 1vh;
+    border-radius: 10px;
+    text-align: center;
+    
+  }
+    #parrafo2 {
+    width: 100%;
+    margin: 10% auto;
+    height: 70vh;
+    border-radius: 10px;
+  }
+    #rivalidades {
+    width: 40%;
+    margin: 1% auto;
+    border-radius: 10px;
+    text-align: center;
+  }
+    #superclasico {
+    margin: 1% auto;
+    border-radius: 10px;
+    text-align: center;
+  }
+  #torneos {
+    text-align: center;
+  }
+  .transitions-section {
+  padding: 20px;
+  text-align: center;
+}
+
+.transition-button {
+  background-color: hsl(46, 100%, 49%);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.transition-button:hover {
+  background-color: hsl(213, 96%, 27%);
+  transform: scale(1.1);
+}
+  .transitions-nombre {
+  padding: 20px;
+  text-align: center;
+}
+
+.transition-nombre {
+  background-color: hsl(46, 100%, 49%);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 16px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.transition-nombre:hover {
+
+  transform: scale(1.1);
+}
+
+.contenedor{
+    display:flex;
+}
+
+.sidebar{
+    width:220px;
+    min-height:1150vh;
+    background-color:hsl(46, 100%, 49%);
+    color:hsl(46, 100%, 49%);
+    padding:20px;
+    text-align:center;
+    border-radius: 40px;
+}
+
+.contenido{
+    flex:1;
+    padding:20px;
+}
+  .sidebar img {
+    display: block;
+    margin-bottom: 100px;
+}
+  #centro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.volver {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #f2c300;
+    color: #001244;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.volver:hover {
+    background-color: #ffd84d;
+}
+.dato-box{
+
+    width: 70%;
+    max-width: 900px;
+
+    margin: 40px auto 150px auto; /* antes 80px auto */
+
+    padding: 35px;
+
+    text-align: center;
+
+    border-radius: 25px;
+
+    background: rgba(0,18,68,0.92);
+
+    border: 4px solid #f2c300;
+
+    box-shadow:
+        0 0 20px rgba(242,195,0,.5),
+        0 0 50px rgba(242,195,0,.25);
+
+    backdrop-filter: blur(8px);
+}
+
+.dato-box h1{
+
+    color: #f2c300;
+
+    margin-bottom: 25px;
+
+    font-family: Arial, sans-serif;
+
+    letter-spacing: 2px;
+}
+
+#dato{
+
+    min-height: 120px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    color: white;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    line-height: 1.7;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,.08);
+
+    transition: .4s;
+}
+
+.dato-btn{
+
+    margin-top: 25px;
+
+    background: #f2c300;
+
+    color: hsl(224, 100%, 13%);
+
+    border: none;
+
+    padding: 16px 35px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    border-radius: 50px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.dato-btn:hover{
+
+    transform: scale(1.08);
+
+    background: #ffd84d;
+
+    box-shadow:
+        0 0 15px #ffd84d,
+        0 0 35px #ffd84d;
+}
+#indice {
+  background: linear-gradient(135deg, hsl(229, 49%, 21%), hsl(229, 55%, 28%));
+  border-radius: 20px;
+  padding: 25px 35px;
+  margin-bottom: 30px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#indice h2 {
+  color: hsl(46, 100%, 49%);
+  font-family: Arial, sans-serif;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+#indice ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+#indice ul li {
+  margin: 0;
+}
+
+#indice ul li a {
+  display: block;
+  background: rgba(255, 255, 255, 0.08);
+  color: hsl(46, 100%, 49%);
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+#indice ul li a:hover {
+  background: hsl(46, 100%, 49%);
+  color: hsl(229, 49%, 21%);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 196, 0, 0.4);
+}
+
+#indice ul li a:active {
+  transform: scale(0.97);
+}
+html {
+  scroll-behavior: smooth;
+}
+
+table {
+    width: 100%;
+    max-width: 1400px;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background: rgba(20, 20, 20, 0.95);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+thead {
+    background:  hsl(229, 49%, 21%);
+}
+
+thead th,
+thead td {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px;
+    text-align: center;
+}
+
+
+td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+tbody tr:nth-child(even) {
+    background-color: rgba(255,255,255,0.05);
+}
+
+
+tbody tr:hover {
+    background-color: hsla(46, 100%, 49%, 0.541);
+    transition: 0.3s;
+}
+
+
+table img {
+    max-width: 180px;
+    height: auto;
+    transition: transform 0.3s;
+}
+
+table img:hover {
+    transform: scale(1.08);
+}
+
+
+#escudos table {
+    background: rgba(10,10,10,0.95);
+}
+
+
+#goleadores table {
+    font-size: 14px;
+}
+
+#goleadores thead tr:first-child {
+    background: hsl(229, 49%, 21%);
+}
+
+#goleadores thead tr:nth-child(2) {
+    background: #222;
+}

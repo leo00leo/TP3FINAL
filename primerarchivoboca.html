@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boca Juniors</title>
+    <link rel="icon" type="image/png" href="https://fbi.cults3d.com/uploaders/24106493/illustration-file/83911c3e-0e05-4440-b36b-fb52840ea1d2/club-atletico-boca-junior-seeklogo.png">
+    <link rel="stylesheet" type="text/css" href="primerarchivoboca.css">
+    <style>
+        #loader{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('fondo.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-family: "Lexend Mega", sans-serif;
+        }
+
+        .spinner{
+            width: 100px;
+            height: 100px;
+            border: 8px solid rgba(255,255,255,0.3);
+            border-top: 8px solid white;
+            border-radius: 50%;
+            animation: girar 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes girar{
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+        }
+    #btn-inicio {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+        position: fixed;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: hsl(46, 100%, 49%);
+        color: hsl(229, 49%, 21%);
+        border: none;
+        border-radius: 50px;
+        padding: 14px 30px;
+        font-size: 22px;
+        font-weight: bold;
+        font-family: Arial, sans-serif;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        z-index: 999;
+        transition: opacity 0.6s ease, transform 0.3s ease, background-color 0.2s ease;
+    }
+    #btn-inicio:hover {
+        background-color: hsl(213, 96%, 27%);
+        color: white;
+        transform: translateX(-50%) scale(1.08);
+    }
+    </style>
+    <div id="loader">
+        <div class="spinner"></div>
+        <h1>CARGANDO...</h1>
+    </div>
+</head>
+<body>
+    <a href="primerarchivo.html" class="volver">⬅ Inicio</a>
+
+    <div class="contenedor">
+    
+    <aside class="sidebar izquierda">
+        
+         <h2 style="color:hsl(229, 49%, 21%); font-family:Arial, Helvetica, sans-serif, sans-serif;">TITULOS DESTACADOS DEL CLUB(TOQUE PARA MAS INFORMACION)</h2>
+         
+         <marquee behavior="scroll" direction="down" scrollamount="70" onmouseover="this.stop();" onmouseout="this.start();"height="98%">
+            <section id="centro">
+                <a style="text-decoration:none" href="copasdestacadas.html" type="text/css"><img src="https://cdn.prod.website-files.com/67dda54c2d07873ce72d5ff4/682b5f765745f97d6e14aa19_copa-libertadores-blue.png" width="100" height="200"></a>
+                <a style="text-decoration:none" href="copasdestacadas.html" type="text/css"><img src="https://cdn.prod.website-files.com/67dda54c2d07873ce72d5ff4/682b39694fdcf9761c3b34fc_copa-intercontinental-blue.png" width="100" height="200"></a>
+                <a style="text-decoration:none" href="copasdestacadas.html" type="text/css"><img src="https://cdn.prod.website-files.com/67dda54c2d07873ce72d5ff4/682b41fdcac2b099cee285d5_copa-sudamericana-blue.png" width="100" height="200"></a>
+                <a style="text-decoration:none" href="copasdestacadas.html" type="text/css"><img src="https://cdn.prod.website-files.com/67dda54c2d07873ce72d5ff4/682b4271edcb5cd3e6f9cfb9_copa-recopa-sudamericana-blue.png" width="100" height="200"></a>
+            </section>
+        </marquee>
+    </aside>
+
+    <main class="contenido">
+        <section class="transitions-nombre">
+            <button class="transition-nombre">
+                <h1 style="color:hsl(229, 49%, 21%); font-family:Arial, sans-serif, sans-serif;">BOCA JUNIORS</h1>
+            </button>
+        </section>
+
+        <section class="transitions-section">
+            <button class="transition-button">
+             <a href="https://www.bocajuniors.com.ar/" target="_blank"><img src="https://fbi.cults3d.com/uploaders/24106493/illustration-file/83911c3e-0e05-4440-b36b-fb52840ea1d2/club-atletico-boca-junior-seeklogo.png" alt="Gran Imagen" width="350" height="450"></a>
+            </button>
+        </section>
+
+        <nav id="indice">
+  <h2>📋 ÍNDICE</h2>
+  <ul>
+    <li><a href="#historia">Historia del club</a></li>
+    <li><a href="#escudos">Escudos históricos</a></li>
+    <li><a href="#estadio">Estadio La Bombonera</a></li>
+    <li><a href="#superclasico">El Superclásico</a></li>
+    <li><a href="#torneos-nacionales">Torneos nacionales</a></li>
+    <li><a href="#torneos-internacionales">Torneos internacionales</a></li>
+    <li><a href="#goleadores">Top 10 goleadores</a></li>
+  </ul>
+</nav>
+
+        <section id="parrafo">
+        <h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif; text-align: justify; line-height: 1.8;">El Club Atlético Boca Juniors es una entidad deportiva argentina con sede en el barrio de La Boca, Ciudad Autónoma de Buenos Aires. Fue fundado el 3 de abril de 1905 por seis vecinos adolescentes hijos de inmigrantes italianos. Su principal disciplina es el fútbol masculino, cuyo primer equipo participa en la Primera División de Argentina. Además, el club compite de forma profesional, tanto a nivel nacional como internacional, en baloncesto, voleibol, futsal, fútbol femenino y balonmano mientras que deportes como el boxeo, judo, karate, taekwondo, gimnasia rítmica, gimnasia artística y hockey se practican a nivel amateur.
+        <br><br>
+        Boca Juniors participa de la Primera División de Argentina desde 1913 y, desde el Torneo Inicial 2013, se convirtió en el único club que disputó todas las temporadas en Primera División desde el comienzo del profesionalismo en 1931. Además, es el equipo con mayor cantidad de partidos disputados. A partir del 8 de junio de 2015, Boca Juniors batió el récord de mayor permanencia ininterrumpida en Primera División, con 37 312 días. El equipo juega sus partidos como local en el estadio Alberto J. Armando, conocido como La Bombonera; allí también ha sido localista en numerosas ocasiones la Selección Argentina de fútbol.
+        <br><br>
+        A nivel local, el club cuenta con 35 campeonatos de liga de Primera División y 17 copas nacionales (récord argentino), entre las que se destacan cuatro ediciones de la Copa Argentina (máximo ganador del certamen: 1969, 2011-12, 2014-15 y 2019-20) y dos ediciones de la Copa de la Liga Profesional (máximo ganador del certamen: 2020, 2022). También posee un título honorífico de la era amateur: la Copa de Honor, obtenida en 1925; un reconocimiento de la AFA a su exitosa gira por Europa en dicho año.</h2>
+        </section>
+
+        <section id="escudos">   
+            <table border="1" style="width: 150%; margin-left: -25%;">
+                <thead>
+                <tr>
+                    <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif, sans-serif;">ESCUDO</h2></td>
+       
+                        <section class="transitions-nombre">
+                            <button class="transition-nombre">
+                                <h1 style="color:hsl(229, 49%, 21%); font-family:Arial, sans-serif, sans-serif;">Escudos</h1>
+                            </button>
+                        </section>
+                    <td><img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Boca_escudo_1911.png" alt="Gran Imagen" width="200" height="210"/></td>
+                    <td><img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Boca_escudo_1915.png" width="200" height="230"/></td>
+                    <td><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Boca_jrs_logo_1970.png" width="200" height="230"/></td>
+                    <td><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/CABJ70.png/250px-CABJ70.png" width="200" height="230"/></td> 
+                
+                </tr>
+            </thead>
+         </section>
+                <tbody>
+                    <tr>
+                        <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif, sans-serif;">AÑO</h2></td>
+                        <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif, sans-serif;">1911-1914</h2></td>
+                        <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif, sans-serif;">1915-1932</h2></td>
+                        <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif, sans-serif;">1932-1996</h2></td>
+                        <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif, sans-serif;">1996-PRESENTE</h2></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <section id="estadio">
+                <section class="transitions-nombre">
+                    <button class="transition-nombre">
+                        <h1 style="color:hsl(229, 49%, 21%); font-family:Arial, Helvetica, sans-serif, sans-serif;">Estadio Alberto J. Armando</h1>
+                    </button>
+                </section>
+            </section>
+
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Vista_a%C3%A9rea_del_Estadio_Alberto_J._Armando_%22La_Bombonera%22_01.jpg/1280px-Vista_a%C3%A9rea_del_Estadio_Alberto_J._Armando_%22La_Bombonera%22_01.jpg" alt="Gran Imagen" width="600" height="450"/>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.9237529806096!2d-58.36807832352989!3d-34.63136705896028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a3350008bee1ef%3A0xb8c23deb9d9236ff!2sLa%20boca%20la%20bombonera!5e0!3m2!1ses!2sar!4v1779152075226!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  
+        <section id="parrafo2">
+        <h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif; text-align: justify; line-height: 1.8;">Fue distinguido como el mejor estadio de fútbol del mundo por la revista inglesa FourFourTwo.
+        <br><br>
+        El sitio web estadounidense Bleacher Report lo ubicó en el puesto 47, entre los 52 estadios deportivos del mundo que hay que visitar antes de morir, describiéndolo como un estadio de forma única, del que se dice que late como un corazón por la influencia de las gradas durante los partidos. La intimidación en su máxima expresión.
+        <br><br>
+        Según The Times (2009), fue considerado el mejor estadio de América y el séptimo a nivel mundial. El medio inglés Copa 90 lo eligió como el mejor estadio del mundo para ver un partido de fútbol.</h2>
+        </section>
+              
+        <section class="transitions-nombre">
+            <button class="transition-nombre">
+                <h1 style="color:hsl(229, 49%, 21%); font-family:Arial, Helvetica, sans-serif, sans-serif;">RIVALIDADES</h1>
+            </button>
+        </section>
+
+        <section class="transitions-nombre">
+            <button class="transition-nombre">
+                <h1 style="color:hsl(229, 49%, 21%); font-family:Arial, Helvetica, sans-serif, sans-serif;">EL SUPERCLASICO</h1>
+            </button>
+        </section> 
+        
+        <section id="superclasico">
+        <div style="border-radius: 10px; width: 100%; box-sizing: border-box;">
+        <h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif; text-align: justify; line-height: 1.8; width: 100%; display: block; box-sizing: border-box;"><em>Artículo principal: Superclásico del fútbol argentino</em>
+        Es el partido que enfrenta a los dos equipos de fútbol más grandes y populares de la Argentina: Boca Juniors y River Plate. Es considerado el clásico más importante del país y uno de los más relevantes del mundo, de allí la denominación de Superclásico. La rivalidad se originó a comienzos del siglo XX, cuando ambos clubes compartían el barrio de La Boca.
+        <br><br>
+        Según diversos historiadores, el primer enfrentamiento se disputó en 1908, con victoria de Boca Juniors por 2-1. El primer partido oficial se jugó el 24 de agosto de 1913, con triunfo de River Plate por 2-1.
+        <br><br>
+        Este encuentro ha sido protagonista de numerosos capítulos que marcaron la historia del deporte argentino, tanto positivos como negativos. Es reconocido internacionalmente como un espectáculo de gran pasión e intensidad.
+        <br><br>
+        En agosto de 2020, la cuenta oficial de FIFA en Twitter realizó una encuesta consultando quién tiene los hinchas más apasionados entre Boca y River. Con 154.104 votos a nivel mundial, Boca obtuvo el 58,8% frente al 41,2% de River.
+        <br><br>
+        Un hecho particular en esta rivalidad son las vueltas olímpicas en el estadio del clásico rival. Boca dio cinco vueltas olímpicas en canchas de River: una en el Alvear y Tagle y cuatro en el Monumental. Dos de ellas fueron tras vencer a River (1931 y Nacional 1969), otra como local en el Monumental (1944 frente a Racing Club) y las restantes en partidos en cancha neutral (Nacional 1970 ante Rosario Central y Metropolitano 1976 frente a Unión de Santa Fe).</h2>
+        </div>
+        </section>
+
+        
+       <section id="torneos-nacionales">
+            <section class="transitions-nombre">
+                <button class="transition-nombre">
+                    <section id="torneos">
+                        <h1 style="color:hsl(229, 49%, 21%); font-family:Arial, Helvetica, sans-serif;">TORNEOS NACIONALES</h1>
+                    </section>          
+                </button>   
+            </section>  
+                
+            <table style="width: 150%; border-collapse: collapse; margin-left: -25%;" border="1">
+            <thead>
+                <tr>
+                    <td ><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Competiciones nacionales</h2></td>
+                    <td ><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Titulos</h2></td>
+                    <td ><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Subcampeonatos</h2></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Primera division Argentina</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1919, 1920, 1923, 1924, 1926, 1930, 1931, 1934, 1935, 1940, 1943, 1944, 1954, 1962, 1964, 1965; N. 1969, N. 1970, M. 1976; N. 1976, 1981, Ap. 1992, Ap. 1998, Cl. 1999, Ap. 2000, Ap. 2003, Ap. 2005, Cl. 2006, Ap. 2008, Ap. 2011, 2015, 2016-17, 2017-18</h3></td>
+                </tr>
+
+                <tr>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Argentina</h3></td>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1969, 2011-12, 2014-15, 2019-20.</h3></td>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;"></h3></td>
+                </tr>
+
+                <tr>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Supercopa Argentina</h3></td>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2018, 2022.</h3></td>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2012, 2015, 2017.</h3></td>
+                </tr>
+
+                <tr>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa de la Liga</h3></td>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2020, 2022.</h3></td>   
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2019.</h3></td>
+                </tr>
+
+                <tr>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa de Competencia Jockey Club </h3></td>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1919, 1925.</h3></td>   
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;"></h3></td>
+                </tr>
+                
+                <tr>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Dr. Carlos Ibarguren</h3></td>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1919, 1923, 1924, 1940, 1944.</h3></td>   
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1920</h3></td>
+                </tr>
+                
+                <tr>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Estimulo</h3></td>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1926.</h3></td>   
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;"></h3></td>
+                </tr>
+                
+                <tr>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa de Competencia Británica</h3></td>
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1946.</h3></td>   
+                    <td ><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1944,1945</h3></td>
+                </tr>
+                </tbody>
+            </table>
+    
+</section> 
+
+<section id="torneos-internacionales">
+
+    <section class="transitions-nombre">
+      <section id="torneos">
+        <button class="transition-nombre"><h1 style="color:hsl(229, 49%, 21%); font-family:Arial, Helvetica, sans-serif;">TORNEOS INTERNACIONALES</h1>
+        </button>
+    </section>  
+      </section>         
+        <table style="width: 150%; border-collapse: collapse; margin-left: -25%;"border="1">
+            <thead>
+                 <tr>
+                    <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Competiciones internacionales</h2></td>
+                    <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Titulos</h2></td>
+                    <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Subcampeonatos</h2></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Intercontinental</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1977,2000,2003</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2001.</h3></td>
+                </tr>
+
+                <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Libertadores</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1977, 1978, 2000, 2001, 2003, 2007.</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1963, 1979, 2004, 2012, 2018, 2023.</h3></td>
+                 </tr>
+                
+                 <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Sudamericana</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2004, 2005.</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;"></h3></td>
+                </tr>
+                
+                <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Recopa Sudamericana</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1990, 2005, 2006, 2008.</h3></td>   
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2004.</h3></td>
+                </tr>
+
+                <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Supercopa sudamericana </h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1989.</h3></td>   
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2004</h3></td>
+                </tr>
+            
+                <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Máster de Supercopa</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1992.</h3></td>   
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1920</h3></td>
+                </tr>
+            
+                <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa de Oro Nicolás Leoz</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1993.</h3></td>   
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;"></h3></td>
+                </tr>
+            
+                <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Mundial de Clubes</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;"></h3></td>   
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2007</h3></td>
+                </tr>
+           
+                <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Interamericana</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;"></h3></td>   
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1977</h3></td>
+                </tr>
+            
+                <tr>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copa Iberoamericana</h3></td>
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;"></h3></td>   
+                    <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1994</h3></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section id="goleadores">
+    <section class="transitions-nombre">
+        <button class="transition-nombre">
+            <h1 style="color:hsl(229, 49%, 21%); font-family:Arial, Helvetica, sans-serif, sans-serif;">TOP 10 GOLEADORES</h1>
+        </button>
+    </section>
+    
+    <table style="width: 150%; border-collapse: collapse; margin-left: -25%;"border="1">
+        <thead>
+            <tr>
+                <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">#</h2></td>
+                <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Jugador</h2></td>
+                <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Temporadas</h2></td>
+                <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Total</h2></td>
+                <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Liga</h2></td>
+                <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">America</h2></td>
+                <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Copas</h2></td>
+                <td><h2 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Promedio</h2></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Martin Palermo</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1997-2011(10)</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">236</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">193</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">43</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">-</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.58</h3></td>
+            </tr>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Roberto Cherro</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1926-38 (13)</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">218</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">210</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">-</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">8</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.73</h3></td>
+            </tr>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">3</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Francisco Varallo</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1931-39 (9)</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">194</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">180</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">-</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">14</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.87</h3></td>
+            </tr>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">4</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Domingo Tarasconi</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1922-32 (11)</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">191</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">185</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">5</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.83</h3></td>
+            </tr>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">5</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Jaime Sarlanga</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1940-48 (9)</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">129</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">114</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">3</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">12</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.59</h3></td>
+            </tr>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">6</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Mario Boye</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1941-55 (10)</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">124</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">113</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">9</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.54</h3></td>
+            </tr>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">7</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Delfín Benítez Cáceres</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1932-39 (8)</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">114</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">106</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">-</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">8</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.65</h3></td>
+            </tr>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">8</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Pio Corcuera</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1941-48 (8)</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">97</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">79</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">5</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">13</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.52</h3></td>
+            </tr>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">9</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Pedro Calomino</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1911-24 (13)</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">94</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">75</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">1</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">15</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.43</h3></td>
+            </tr>
+            <tr>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">=</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">Carlos Tevez</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">2001-21 (11)</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">94</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">57</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">25</h3></td>   
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">12</h3></td>
+                <td><h3 style="color:hsl(46, 100%, 49%); font-family:Arial, Helvetica, sans-serif;">0.34</h3></td>
+            </tr>
+        </tbody>
+    </table>
+    </section>
+    <div class="dato-box">
+
+    <h1>📖 DATO CURIOSO XENEIZE</h1>
+
+    <div id="dato">
+        Presiona el botón para descubrir un dato sobre Boca Juniors.
+    </div>
+
+    <button class="dato-btn" onclick="dato()">
+        DESCUBRIR DATO
+    </button>
+
+</div>
+    </main>
+        
+
+    <aside class="sidebar derecha">
+            <h2 style="color:hsl(229, 49%, 21%);; font-family:Arial, Helvetica, sans-serif, sans-serif;">PATROCINADORES</h2>
+                <marquee behavior="scroll" direction="down" scrollamount="70" onmouseover="this.stop();" onmouseout="this.start();"height="99%">
+                    <section id="centro">
+                        <a href="https://www.adidas.com.ar/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Adidas_2022_logo.svg/960px-Adidas_2022_logo.svg.png" width="150" height="100"></a>
+                        <a href="https://pba.betsson.bet.ar/" target="_blank"><img src="BETTSON.png" width="240" height="200"></a>
+                        <a href="https://www.directv.com.ar/midirectv/ingresar" target="_blank"><img src="DIRECTV.png" width="235" height="200"></a>      
+                        <a href="https://www.cetrogar.com.ar/" target="_blank"><img src="CETROGAR.png" width="235" height="200"></a>
+                        <a href="https://www.paxassistance.com/ar" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Pax-a.png/960px-Pax-a.png" width="200" height="150"></a>
+                    </section>
+                </marquee>
+    </aside>
+    
+</div>
+
+
+<button id="btn-inicio" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+<script>
+    document.getElementById("dato").style.fontFamily = "Arial, sans-serif";
+    const datos = [
+
+    "La Bombonera fue inaugurada el 25 de mayo de 1940.",
+
+    "El Superclásico es considerado uno de los partidos más importantes del mundo.",
+
+    "Boca y River han disputado más de 250 Superclásicos oficiales.",
+
+    "Juan Román Riquelme es uno de los máximos ídolos de Boca.",
+
+    "La Bombonera es famosa por su acústica y cercanía al campo.",
+   
+    "Boca Juniors cuenta con 6 libertadores",
+   
+    "Boca Juniors cuenta con 3 intercontinentales",
+    
+    "Boca Juniors nunca descendió",
+
+];
+
+function dato(){
+
+    let random = Math.floor(Math.random() * datos.length);
+
+    document.getElementById("dato").innerHTML =
+        datos[random];
+}
+    window.addEventListener("load", function(){
+
+            setTimeout(function(){
+
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("contenido").style.display = "block";
+
+            }, 2500);
+
+        });
+
+    window.addEventListener('scroll', function() {
+        var btn = document.getElementById('btn-inicio');
+        var scrolledToBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 300;
+        if (scrolledToBottom) {
+            btn.style.opacity = '1';
+            btn.style.pointerEvents = 'auto';
+        } else {
+            btn.style.opacity = '0';
+            btn.style.pointerEvents = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>

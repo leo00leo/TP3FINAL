@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los más grandes</title>
+
+    <link rel="icon" type="image/png" href="https://w7.pngwing.com/pngs/102/559/png-transparent-american-football-ball-game-ball-3d-computer-graphics-sport-sports-equipment.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        
+        body{
+            background-image: url('FONDOLI.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #elija{
+            text-align:center;
+            padding-top:40px;
+            }
+        #elija{
+            text-align:center;
+            padding-top:40px;
+        }
+
+        #elija img{
+            width: auto;
+            height: 350px;
+            margin: 20px;
+
+            transition:
+            transform .35s ease,
+            filter .35s ease;
+
+            filter:
+            drop-shadow(0 0 15px rgba(255,255,255,.25));
+        }
+
+        #elija img:hover{
+
+            transform:scale(1.12);
+
+            filter:
+            drop-shadow(0 0 25px rgba(255,255,255,.7))
+            drop-shadow(0 0 50px rgba(255,215,0,.4));
+        }
+
+        #loader{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('FONDOLI.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-family: "Lexend Mega", sans-serif;
+        }
+
+        .spinner{
+            width: 100px;
+            height: 100px;
+            border: 8px solid rgba(255,255,255,0.3);
+            border-top: 8px solid white;
+            border-radius: 50%;
+            animation: girar 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes girar{
+            from{ transform: rotate(0deg); }
+            to{   transform: rotate(360deg); }
+        }
+
+        #contenido{ display: none; }
+
+        h1{ color: white; margin-bottom: 25px; }
+        h2{ color: white; margin-bottom: 25px; }
+
+        .contenedor{
+            margin-top: 100px;
+            background: rgb(43, 33, 11);
+            padding: 50px;
+            width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transition: 0.3s ease;
+        }
+
+        .contenedor:hover{
+            transform: scale(1.05);
+            box-shadow:
+                0 0 20px rgba(255,255,255,0.3),
+                0 0 40px rgba(255,215,0,0.5),
+                0 0 80px rgba(255,215,0,0.3);
+        }
+
+        button{
+            padding: 15px 40px;
+            margin: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover{ transform: scale(1.08); }
+
+        .river{
+            background: linear-gradient(135deg, #e53935, #c62828);
+            color: white;
+        }
+        .river:hover{
+            background: linear-gradient(135deg, #ef5350, #d32f2f);
+            box-shadow: 0 0 10px rgba(255,0,0,0.8), 0 0 20px rgba(255,0,0,0.6), 0 0 40px rgba(255,0,0,0.4);
+        }
+
+        .boca{
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: #ffd600;
+        }
+        .boca:hover{
+            background: linear-gradient(135deg, #1976d2, #1565c0);
+            box-shadow: 0 0 10px rgba(0,102,255,0.8), 0 0 20px rgba(0,102,255,0.6), 0 0 40px rgba(0,102,255,0.4);
+        }
+
+        button:active{ transform: scale(0.96); }
+
+        .futbol11-section {
+            margin: 40px auto 0;
+            width: 350px;
+        }
+
+        .futbol11-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #1a472a, #0d2b18);
+            color: white;
+            text-decoration: none;
+            padding: 60px 50px;
+            border-radius: 16px;
+            font-family: 'Lexend Mega', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .futbol11-btn:hover {
+            transform: scale(1.06);
+            box-shadow:
+                0 0 15px rgba(255,255,255,0.2),
+                0 0 35px rgba(0,200,80,0.4),
+                0 0 60px rgba(0,200,80,0.2);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .futbol11-btn:active { transform: scale(0.97); }
+
+        .futbol11-badge {
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 4px 8px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.8);
+        }
+        .contador-superclasico{
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 320px;
+        margin: 0;
+        z-index: 1000;
+
+        background: rgba(43, 33, 11, 0.95);
+        padding: 20px;
+        border-radius: 15px;
+
+        box-shadow:
+            0 0 15px rgba(255,255,255,0.15),
+            0 0 30px rgba(255,215,0,0.2);
+        }
+        .contador-superclasico h1{
+        font-size: 18px;
+        margin: 0 0 10px 0;
+        }
+        .contador-superclasico h2{
+            font-size: 14px;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <h1>CARGANDO...</h1>
+    </div>
+
+    <div id="contenido">
+
+        <section id="elija">
+            <h1 style="font-family:Lexend Mega, sans-serif;">
+                ELIJA UN EQUIPO
+            </h1>
+
+            <a href="primerarchivoboca.html">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/CABJ70.png/960px-CABJ70.png"
+                     alt="Boca escudo"
+                     width="350"
+                     height="400">
+            </a>
+
+            <a href="primerarchivoriver.html">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Logo_River_Plate.png/500px-Logo_River_Plate.png"
+                     alt="River Plate escudo"
+                     width="350"
+                     height="400">
+            </a>
+        </section>
+
+        <div class="futbol11-section">
+            <a href="futbol11.html" class="futbol11-btn">
+                ⚽ Armá el XI en 1M 30S
+                <span class="futbol11-badge">NUEVO</span>
+            </a>
+        </div>
+
+        <div class="contenedor">
+
+            <h1>Encuesta Superclásico</h1>
+
+            <h2>¿Quién es el más grande?</h2>
+
+            <button class="boca" onclick="votarRiver()">
+                BOCA
+            </button>
+
+            <button class="river" onclick="votarBoca()">
+                RIVER
+            </button>
+
+            <h1>Resultados</h1>
+
+            <h2 id="resultadoRiver">BOCA: 0 VOTOS</h2>
+
+            <h2 id="resultadoBoca">RIVER: 0 VOTOS</h2>
+
+        </div>
+
+        <div class="contador-superclasico">
+        <h1>⏳ Próximo Superclásico</h1>
+
+        <h2 id="contador">
+            Calculando...
+        </h2>
+        </div>
+
+    </div>
+
+    <script>
+        
+        window.addEventListener("load", function(){
+            setTimeout(function(){
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("contenido").style.display = "block";
+            }, 2500);
+        });
+
+        let votosRiver = 0;
+        let votosBoca = 0;
+
+        function votarRiver(){
+            votosBoca++;
+            document.getElementById("resultadoRiver").innerHTML = "BOCA: " + votosBoca + " VOTOS";
+        }
+
+        function votarBoca(){
+            votosRiver++;
+            document.getElementById("resultadoBoca").innerHTML = "RIVER: " + votosRiver + " VOTOS";
+        }
+    </script>
+
+    <script>
+const fechaPartido = new Date("2026-11-09T15:00:00");
+
+function actualizarContador() {
+
+    const ahora = new Date();
+    const diferencia = fechaPartido - ahora;
+
+    const dias = Math.floor(
+        diferencia / (1000 * 60 * 60 * 24)
+    );
+
+    const horas = Math.floor(
+        (diferencia % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+    );
+
+    const minutos = Math.floor(
+        (diferencia % (1000 * 60 * 60))
+        / (1000 * 60)
+    );
+
+    const segundos = Math.floor(
+        (diferencia % (1000 * 60))
+        / 1000
+    );
+
+    document.getElementById("contador").innerHTML =
+        `⚽ Faltan ${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos`;
+}
+
+actualizarContador();
+setInterval(actualizarContador, 1000);
+    </script>
+</body>
+</html>
