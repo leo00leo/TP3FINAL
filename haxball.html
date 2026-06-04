@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boca vs River — HaxBall</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --boca-blue:#003f8a;--boca-yellow:#f5c518;
+  --river-red:#cc0000;--river-white:#f0f0f0;
+  --hud-bg:rgba(5,10,20,0.92);
+}
+body{overflow:hidden;display:flex;justify-content:center;align-items:center;height:100vh;background:#050a14;font-family:'Inter',sans-serif;}
+#wrapper{position:relative;display:inline-block;}
+canvas{display:block;}
+
+/* HUD */
+#hud{position:absolute;top:0;left:0;right:0;height:60px;background:var(--hud-bg);display:flex;align-items:center;justify-content:space-between;padding:0 20px;pointer-events:none;border-bottom:2px solid rgba(255,255,255,0.08);}
+.team-block{display:flex;align-items:center;gap:10px;min-width:200px;}
+.team-block.right{flex-direction:row-reverse;}
+.team-badge{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:15px;letter-spacing:1px;flex-shrink:0;}
+.boca-badge{background:var(--boca-blue);color:var(--boca-yellow);border:2px solid var(--boca-yellow);}
+.river-badge{background:var(--river-white);color:var(--river-red);border:2px solid var(--river-red);}
+.team-name{font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:2px;color:white;}
+.score-box{display:flex;align-items:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;overflow:hidden;}
+.score-num{font-family:'Bebas Neue',cursive;font-size:36px;color:white;padding:0 18px;line-height:1;}
+.score-sep{font-family:'Bebas Neue',cursive;font-size:28px;color:rgba(255,255,255,0.3);padding:0 4px;}
+.timer-block{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.timer-val{font-family:'Bebas Neue',cursive;font-size:26px;color:white;letter-spacing:3px;}
+.timer-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.4);}
+
+/* Controls hint */
+#controls-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:16px;pointer-events:none;}
+.hint-pill{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.5px;}
+
+/* MENU */
+#menu{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#050a14 0%,#0a1628 60%,#050a14 100%);z-index:10;}
+.menu-logo{font-family:'Bebas Neue',cursive;font-size:64px;letter-spacing:6px;color:white;line-height:1;text-align:center;}
+.menu-sub{font-family:'Bebas Neue',cursive;font-size:28px;color:rgba(255,255,255,0.25);letter-spacing:8px;margin:4px 0 36px;}
+.choose-label{font-size:12px;text-transform:uppercase;letter-spacing:3px;color:rgba(255,255,255,0.35);margin-bottom:18px;}
+
+.team-selector{display:flex;gap:32px;margin-bottom:44px;}
+.team-card{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding:24px 36px;border-radius:16px;
+  border:2px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.03);
+  cursor:pointer;transition:all 0.2s;user-select:none;
+}
+.team-card:hover{border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.07);transform:translateY(-2px);}
+.team-card.selected-boca{border-color:var(--boca-yellow);background:rgba(0,63,138,0.25);box-shadow:0 0 30px rgba(245,197,24,0.2);}
+.team-card.selected-river{border-color:var(--river-red);background:rgba(204,0,0,0.15);box-shadow:0 0 30px rgba(204,0,0,0.2);}
+.tc-circle{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:1px;transition:transform 0.2s;}
+.team-card:hover .tc-circle{transform:scale(1.08);}
+.tc-name{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:3px;color:white;}
+.tc-side{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.3);}
+.check-mark{font-size:20px;opacity:0;transition:opacity 0.2s;}
+.team-card.selected-boca .check-mark,.team-card.selected-river .check-mark{opacity:1;}
+
+.menu-controls{display:flex;gap:32px;margin-bottom:44px;}
+.ctrl-item{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.ctrl-key{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:4px 12px;font-family:'Bebas Neue',cursive;font-size:18px;letter-spacing:2px;color:white;}
+.ctrl-desc{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.4);}
+
+#play-btn{background:white;color:#050a14;border:none;border-radius:50px;padding:16px 64px;font-family:'Bebas Neue',cursive;font-size:32px;letter-spacing:4px;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;opacity:0.4;pointer-events:none;}
+#play-btn.ready{opacity:1;pointer-events:all;}
+#play-btn.ready:hover{transform:scale(1.04);box-shadow:0 0 40px rgba(255,255,255,0.25);}
+#play-btn:active{transform:scale(0.98);}
+
+/* END SCREEN */
+#end-screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(5,10,20,0.93);z-index:9;}
+.end-title{font-family:'Bebas Neue',cursive;font-size:30px;color:rgba(255,255,255,0.5);letter-spacing:6px;margin-bottom:12px;}
+.end-winner{font-family:'Bebas Neue',cursive;font-size:72px;color:white;letter-spacing:4px;margin-bottom:8px;}
+.end-score{font-family:'Bebas Neue',cursive;font-size:44px;color:rgba(255,255,255,0.6);margin-bottom:48px;}
+#replay-btn{background:white;color:#050a14;border:none;border-radius:50px;padding:14px 52px;font-family:'Bebas Neue',cursive;font-size:26px;letter-spacing:3px;cursor:pointer;transition:transform 0.15s;}
+#replay-btn:hover{transform:scale(1.04);}
+.volver {position: fixed;top: 20px;left: 20px;display: inline-flex;align-items: center;gap: 12px;background: linear-gradient(135deg, #1b5570, #082024);color: white;text-decoration: none;padding: 18px 36px;border-radius: 16px;font-family: 'Lexend Mega', sans-serif;font-size: 15px;font-weight: 700;letter-spacing: 1px;transition: 0.3s ease;box-shadow: 0 6px 20px rgba(0,0,0,0.4);border: 2px solid rgba(255,255,255,0.1);} 
+  .volver:hover {transform: scale(1.06);box-shadow:0 0 15px rgba(255,255,255,0.2),0 0 35px rgba(0, 137, 200, 0.4),0 0 60px rgba(4, 137, 199, 0.2);border-color: rgba(255,255,255,0.3);}
+</style>
+</head>
+<body>
+<a href="primerarchivo.html" class="volver">⬅ Inicio</a>
+<div id="wrapper">
+  <canvas id="game" width="1100" height="650"></canvas>
+
+  <div id="hud">
+    <div class="team-block">
+      <div class="team-badge boca-badge" id="hud-left-badge">BOC</div>
+      <div class="team-name" id="hud-left-name">Boca</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px;">
+      <div class="score-box">
+        <span class="score-num" id="score-left">0</span>
+        <span class="score-sep">–</span>
+        <span class="score-num" id="score-right">0</span>
+      </div>
+    </div>
+    <div class="timer-block" style="position:absolute;left:50%;transform:translateX(-50%);">
+      <div class="timer-val" id="timer-display">5:00</div>
+      <div class="timer-label">Tiempo</div>
+    </div>
+    <div class="team-block right">
+      <div class="team-badge river-badge" id="hud-right-badge">RIV</div>
+      <div class="team-name" id="hud-right-name">River</div>
+    </div>
+  </div>
+
+  <div id="controls-hint">
+    <div class="hint-pill">WASD — Mover</div>
+    <div class="hint-pill">ESPACIO — Patear</div>
+    <div class="hint-pill">Círculo punteado = Rango de patada</div>
+  </div>
+
+  <!-- MENU -->
+  <div id="menu">
+    <div class="menu-logo">⚽ HaxBall</div>
+    <div class="menu-sub">Superclásico</div>
+
+    <div class="choose-label">Elegí tu equipo</div>
+    <div class="team-selector">
+      <div class="team-card" id="card-boca" onclick="selectTeam('boca')">
+        <div class="tc-circle boca-badge">BOC</div>
+        <div class="tc-name">Boca</div>
+        <div class="tc-side">Arco derecho →</div>
+        <div class="check-mark">✓</div>
+      </div>
+      <div class="team-card" id="card-river" onclick="selectTeam('river')">
+        <div class="tc-circle river-badge">RIV</div>
+        <div class="tc-name">River</div>
+        <div class="tc-side">← Arco izquierdo</div>
+        <div class="check-mark">✓</div>
+      </div>
+    </div>
+
+    <div class="menu-controls">
+      <div class="ctrl-item">
+        <div class="ctrl-key">W A S D</div>
+        <div class="ctrl-desc">Moverte</div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-key">ESPACIO</div>
+        <div class="ctrl-desc">Patear</div>
+      </div>
+    </div>
+    <button id="play-btn" onclick="startGame()">JUGAR</button>
+  </div>
+
+  <div id="end-screen">
+    <div class="end-title">Resultado Final</div>
+    <div class="end-winner" id="end-winner">EMPATE</div>
+    <div class="end-score" id="end-score">0 – 0</div>
+    <button id="replay-btn" onclick="replayGame()">JUGAR DE NUEVO</button>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+const W = canvas.width, H = canvas.height;
+const FIELD_TOP = 60, FIELD_H = H - 60;
+const GOAL_H = 200, GOAL_W = 50;
+const GOAL_TOP = FIELD_TOP + (FIELD_H - GOAL_H) / 2;
+const GOAL_BOT = GOAL_TOP + GOAL_H;
+const KICK_RANGE = 68;
+
+// ── State ───────────────────────────────────────────────
+let selectedTeam = null; // 'boca' | 'river'
+let playerIsBoca = true;
+let scoreLeft = 0, scoreRight = 0;  // left = player's side, right = ai's side
+let time = 300, running = false, gameOver = false;
+let goalMsg = "", goalMsgTimer = 0, flash = 0, flashColor = "255,255,255";
+let kickCooldown = 0, spacePressed = false;
+let ticker = null;
+
+const keys = {};
+document.addEventListener("keydown", e => {
+  keys[e.code] = true;
+  if (e.code === "Space") {
+    e.preventDefault();
+    if (!spacePressed) {
+      spacePressed = true;
+      if (kickCooldown <= 0) { doKick(player); kickCooldown = 20; }
+    }
+  }
+  if (["ArrowUp","ArrowDown"].includes(e.code)) e.preventDefault();
+});
+document.addEventListener("keyup", e => {
+  keys[e.code] = false;
+  if (e.code === "Space") spacePressed = false;
+});
+
+// ── Team selection ──────────────────────────────────────
+function selectTeam(team) {
+  selectedTeam = team;
+  document.getElementById("card-boca").className = "team-card" + (team==="boca" ? " selected-boca" : "");
+  document.getElementById("card-river").className = "team-card" + (team==="river" ? " selected-river" : "");
+  document.getElementById("play-btn").className = "ready";
+  // preview HUD
+  updateHUDLabels();
+}
+
+function updateHUDLabels() {
+  if (!selectedTeam) return;
+  playerIsBoca = selectedTeam === "boca";
+  if (playerIsBoca) {
+    document.getElementById("hud-left-badge").textContent = "BOC";
+    document.getElementById("hud-left-badge").className = "team-badge boca-badge";
+    document.getElementById("hud-left-name").textContent = "Boca";
+    document.getElementById("hud-right-badge").textContent = "RIV";
+    document.getElementById("hud-right-badge").className = "team-badge river-badge";
+    document.getElementById("hud-right-name").textContent = "River";
+  } else {
+    document.getElementById("hud-left-badge").textContent = "RIV";
+    document.getElementById("hud-left-badge").className = "team-badge river-badge";
+    document.getElementById("hud-left-name").textContent = "River";
+    document.getElementById("hud-right-badge").textContent = "BOC";
+    document.getElementById("hud-right-badge").className = "team-badge boca-badge";
+    document.getElementById("hud-right-name").textContent = "Boca";
+  }
+}
+
+// ── Entities ────────────────────────────────────────────
+// Player always starts left, AI always starts right
+const player = { x:220, y:FIELD_TOP+FIELD_H/2, r:22, vx:0, vy:0 };
+const ai     = { x:880, y:FIELD_TOP+FIELD_H/2, r:22, vx:0, vy:0 };
+// Ball physics: vx/vy = velocity, spin = angular momentum for Magnus
+const ball   = { x:W/2, y:FIELD_TOP+FIELD_H/2, r:13, vx:0, vy:0, spin:0 };
+
+function resetPositions() {
+  player.x=220; player.y=FIELD_TOP+FIELD_H/2; player.vx=0; player.vy=0;
+  ai.x=880;     ai.y=FIELD_TOP+FIELD_H/2;     ai.vx=0;     ai.vy=0;
+  ball.x=W/2;   ball.y=FIELD_TOP+FIELD_H/2;   ball.vx=0;   ball.vy=0; ball.spin=0;
+}
+
+// ── Game lifecycle ──────────────────────────────────────
+function startGame() {
+  if (!selectedTeam) return;
+  document.getElementById("menu").style.display = "none";
+  playerIsBoca = selectedTeam === "boca";
+  updateHUDLabels();
+  scoreLeft = 0; scoreRight = 0; time = 300;
+  updateScoreDisplay(); updateTimerDisplay();
+  resetPositions();
+  running = true; gameOver = false;
+  if (ticker) clearInterval(ticker);
+  ticker = setInterval(() => { if (running && time > 0) { time--; updateTimerDisplay(); } }, 1000);
+  requestAnimationFrame(loop);
+}
+
+function replayGame() {
+  selectedTeam = null;
+  document.getElementById("card-boca").className = "team-card";
+  document.getElementById("card-river").className = "team-card";
+  document.getElementById("play-btn").className = "";
+  document.getElementById("end-screen").style.display = "none";
+  document.getElementById("menu").style.display = "flex";
+}
+
+function updateScoreDisplay() {
+  document.getElementById("score-left").textContent  = scoreLeft;
+  document.getElementById("score-right").textContent = scoreRight;
+}
+function updateTimerDisplay() {
+  let m = Math.floor(time/60), s = time%60;
+  document.getElementById("timer-display").textContent = `${m}:${String(s).padStart(2,"0")}`;
+}
+
+// ── Physics ─────────────────────────────────────────────
+function doKick(p) {
+  let dx = ball.x-p.x, dy = ball.y-p.y, dist = Math.hypot(dx,dy);
+  if (dist >= KICK_RANGE || dist <= 1) return;
+
+  // Kick direction = where the player is MOVING, not where the ball is
+  let spd = Math.hypot(p.vx, p.vy);
+  let kx, ky;
+  if (spd > 0.15) {
+    // Direction comes from player velocity (where they're running)
+    kx = p.vx / spd;
+    ky = p.vy / spd;
+  } else {
+    // Standing still: kick away from player center toward ball
+    kx = dx / dist;
+    ky = dy / dist;
+  }
+
+  let power = 2.2 + Math.random()*0.4;
+  ball.vx = kx * power;
+  ball.vy = ky * power;
+  ball.spin = (kx*p.vy - ky*p.vx) * 0.3;
+  // Small recoil on player
+  p.vx -= kx*0.5; p.vy -= ky*0.5;
+}
+
+// Elastic collision between two circular bodies of equal mass
+function collideBodies(a, b) {
+  let dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy), min=a.r+b.r;
+  if (d < min && d > 0.01) {
+    let nx=dx/d, ny=dy/d, ov=(min-d)*0.52;
+    a.x -= nx*ov; a.y -= ny*ov;
+    b.x += nx*ov; b.y += ny*ov;
+    let rvx=b.vx-a.vx, rvy=b.vy-a.vy, dot=rvx*nx+rvy*ny;
+    if (dot < 0) {
+      let imp = dot * 1.05;
+      a.vx += imp*nx; a.vy += imp*ny;
+      b.vx -= imp*nx; b.vy -= imp*ny;
+    }
+  }
+}
+
+// Player-ball collision with spin transfer
+function collidePlayerBall(p) {
+  let dx=ball.x-p.x, dy=ball.y-p.y, d=Math.hypot(dx,dy), min=p.r+ball.r;
+  if (d < min && d > 0.01) {
+    let nx=dx/d, ny=dy/d;
+    ball.x = p.x + nx*(min+0.5);
+    ball.y = p.y + ny*(min+0.5);
+    let rvx=ball.vx-p.vx, rvy=ball.vy-p.vy, dot=rvx*nx+rvy*ny;
+    if (dot < 0) {
+      ball.vx -= dot*nx*1.3;
+      ball.vy -= dot*ny*1.3;
+      ball.spin += (nx*p.vy - ny*p.vx) * 0.25;
+    }
+  }
+}
+
+// ── Player movement ─────────────────────────────────────
+// Slow, deliberate feel: low accel, strong damping
+function movePlayer() {
+  const acc = 0.14, maxSpd = 1.8;
+  if (keys["KeyW"]||keys["ArrowUp"])    player.vy -= acc;
+  if (keys["KeyS"]||keys["ArrowDown"])  player.vy += acc;
+  if (keys["KeyA"]||keys["ArrowLeft"])  player.vx -= acc;
+  if (keys["KeyD"]||keys["ArrowRight"]) player.vx += acc;
+  // Strong friction → feels heavy on grass
+  player.vx *= 0.84; player.vy *= 0.84;
+  let sp = Math.hypot(player.vx, player.vy);
+  if (sp > maxSpd) { player.vx=player.vx/sp*maxSpd; player.vy=player.vy/sp*maxSpd; }
+  player.x += player.vx; player.y += player.vy;
+  player.x = Math.max(player.r, Math.min(W-player.r, player.x));
+  player.y = Math.max(FIELD_TOP+player.r, Math.min(H-player.r, player.y));
+}
+
+// ── AI movement ─────────────────────────────────────────
+let aiHesitate = 0;  // frames the AI randomly pauses
+function moveAI() {
+  let dx=ball.x-ai.x, dy=ball.y-ai.y, dist=Math.hypot(dx,dy);
+
+  // Random hesitation — AI freezes occasionally but rarely
+  if (aiHesitate > 0) { aiHesitate--; ai.vx*=0.8; ai.vy*=0.8; ai.x+=ai.vx; ai.y+=ai.vy; return; }
+  if (Math.random() < 0.004) aiHesitate = 10 + Math.random()*15;
+
+  // Chase ball with small error so it's not robotic
+  let errorX = (Math.random()-0.5)*8;
+  let errorY = (Math.random()-0.5)*8;
+  let tx = ball.x + errorX;
+  let ty = ball.y + errorY;
+
+  let tdx=tx-ai.x, tdy=ty-ai.y, td=Math.hypot(tdx,tdy);
+  const acc=0.13, maxSpd=1.3;
+  if (td > 1) { ai.vx += (tdx/td)*acc; ai.vy += (tdy/td)*acc; }
+  ai.vx *= 0.83; ai.vy *= 0.83;
+  let sp = Math.hypot(ai.vx, ai.vy);
+  if (sp > maxSpd) { ai.vx=ai.vx/sp*maxSpd; ai.vy=ai.vy/sp*maxSpd; }
+  ai.x += ai.vx; ai.y += ai.vy;
+
+  // AI kick — misses ~15% of the time
+  if (dist < KICK_RANGE * 0.88 && Math.random() < 0.05) {
+    let misses = Math.random() < 0.15;
+    let aimY = FIELD_TOP + FIELD_H/2 + (Math.random()-0.5)*(misses ? 160 : 50);
+    let bx = 0 - ball.x, by = aimY - ball.y, bl = Math.hypot(bx, by);
+    let pwr = misses ? (1.2 + Math.random()*0.5) : (2.1 + Math.random()*0.3);
+    ball.vx = (bx/bl)*pwr;
+    ball.vy = (by/bl)*pwr;
+    ball.spin = (Math.random()-0.5)*0.8;
+  }
+  ai.x = Math.max(ai.r, Math.min(W-ai.r, ai.x));
+  ai.y = Math.max(FIELD_TOP+ai.r, Math.min(H-ai.r, ai.y));
+}
+
+// ── Ball physics ─────────────────────────────────────────
+function updateBall() {
+  // Move first
+  ball.x += ball.vx;
+  ball.y += ball.vy;
+
+  // Speed cap
+  let spd = Math.hypot(ball.vx, ball.vy);
+  if (spd > 15) { ball.vx=ball.vx/spd*15; ball.vy=ball.vy/spd*15; spd=15; }
+
+  // Grass friction — very low so ball slides long distances
+  if (spd > 0.08) {
+    ball.vx *= 0.999;
+    ball.vy *= 0.999;
+  } else {
+    ball.vx = 0;
+    ball.vy = 0;
+  }
+
+  // Magnus effect: spin curves the ball
+  ball.vx += ball.spin * ball.vy * 0.008;
+  ball.vy -= ball.spin * ball.vx * 0.008;
+  ball.spin *= 0.984;
+
+  ball.x += ball.vx; ball.y += ball.vy;
+
+  // Walls — lose energy on bounce
+  if (ball.y - ball.r < FIELD_TOP) {
+    ball.y = FIELD_TOP + ball.r;
+    ball.vy = Math.abs(ball.vy) * 0.62;
+    ball.vx *= 0.92; ball.spin *= 0.5;
+  }
+  if (ball.y + ball.r > H) {
+    ball.y = H - ball.r;
+    ball.vy = -Math.abs(ball.vy) * 0.62;
+    ball.vx *= 0.92; ball.spin *= 0.5;
+  }
+
+  // Goals / side walls
+  // Player is ALWAYS left side. AI is ALWAYS right side.
+  // Ball enters left goal (x<=0)  → AI scored on player
+  // Ball enters right goal (x>=W) → Player scored on AI
+  if (ball.x - ball.r <= 0) {
+    if (ball.y > GOAL_TOP && ball.y < GOAL_BOT) {
+      // AI scored — right side score goes up
+      scoreRight++;
+      if (playerIsBoca) { goalMsg="¡GOOOL DE RIVER!"; flashColor="180,0,0"; }
+      else              { goalMsg="¡GOOOL DE BOCA!";  flashColor="0,50,140"; }
+      updateScoreDisplay();
+      goalMsgTimer=220; flash=28;
+      resetPositions();
+    } else {
+      ball.x = ball.r; ball.vx = Math.abs(ball.vx)*0.65; ball.spin*=0.6;
+    }
+  }
+  if (ball.x + ball.r >= W) {
+    if (ball.y > GOAL_TOP && ball.y < GOAL_BOT) {
+      // Player scored — left side score goes up
+      scoreLeft++;
+      if (playerIsBoca) { goalMsg="¡GOOOL DE BOCA!";  flashColor="0,50,140"; }
+      else              { goalMsg="¡GOOOL DE RIVER!"; flashColor="180,0,0"; }
+      updateScoreDisplay();
+      goalMsgTimer=220; flash=28;
+      resetPositions();
+    } else {
+      ball.x = W - ball.r; ball.vx = -Math.abs(ball.vx)*0.65; ball.spin*=0.6;
+    }
+  }
+  // Goal back walls
+  if (ball.x - ball.r < -GOAL_W) { ball.x=-GOAL_W+ball.r; ball.vx=Math.abs(ball.vx)*0.5; }
+  if (ball.x + ball.r > W+GOAL_W){ ball.x=W+GOAL_W-ball.r; ball.vx=-Math.abs(ball.vx)*0.5; }
+}
+
+// ── Update loop ──────────────────────────────────────────
+function update() {
+  if (time <= 0 && running) {
+    running = false; gameOver = true;
+    clearInterval(ticker);
+    setTimeout(showEndScreen, 1200);
+    return;
+  }
+  if (kickCooldown > 0) kickCooldown--;
+  movePlayer();
+  moveAI();
+  collideBodies(player, ai);
+  collidePlayerBall(player);
+  collidePlayerBall(ai);
+  updateBall();
+  if (goalMsgTimer > 0) goalMsgTimer--;
+  if (flash > 0) flash--;
+}
+
+function showEndScreen() {
+  document.getElementById("end-screen").style.display = "flex";
+  let wn = document.getElementById("end-winner");
+  let sc = document.getElementById("end-score");
+  // Determine winner by who is who
+  let playerGoals = scoreLeft, aiGoals = scoreRight;
+  let playerTeamName = playerIsBoca ? "BOCA" : "RIVER";
+  let aiTeamName     = playerIsBoca ? "RIVER" : "BOCA";
+  if (playerGoals > aiGoals)      { wn.textContent=`🏆 GANA ${playerTeamName}`; wn.style.color = playerIsBoca ? "#f5c518" : "#ff4444"; }
+  else if (aiGoals > playerGoals) { wn.textContent=`🏆 GANA ${aiTeamName}`;    wn.style.color = playerIsBoca ? "#ff4444" : "#f5c518"; }
+  else                            { wn.textContent="🤝 EMPATE"; wn.style.color="white"; }
+  sc.textContent = `${scoreLeft} – ${scoreRight}`;
+}
+
+// ── Drawing ──────────────────────────────────────────────
+function drawField() {
+  let sw = W/10;
+  for (let i=0;i<10;i++) {
+    ctx.fillStyle = i%2===0 ? "#2a7a3b" : "#2f8c44";
+    ctx.fillRect(i*sw, FIELD_TOP, sw, FIELD_H);
+  }
+  ctx.save();
+  ctx.strokeStyle = "rgba(255,255,255,0.32)"; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(W/2,FIELD_TOP); ctx.lineTo(W/2,H); ctx.stroke();
+  ctx.beginPath(); ctx.arc(W/2, FIELD_TOP+FIELD_H/2, 85, 0, Math.PI*2); ctx.stroke();
+  ctx.fillStyle = "rgba(255,255,255,0.45)";
+  ctx.beginPath(); ctx.arc(W/2, FIELD_TOP+FIELD_H/2, 5, 0, Math.PI*2); ctx.fill();
+  let pbW=110, pbH=280, pbTop=FIELD_TOP+(FIELD_H-pbH)/2;
+  ctx.strokeRect(0, pbTop, pbW, pbH);
+  ctx.strokeRect(W-pbW, pbTop, pbW, pbH);
+  ctx.restore();
+}
+
+function drawGoals() {
+  function drawGoal(x) {
+    ctx.save();
+    ctx.fillStyle = "rgba(0,0,0,0.22)";
+    ctx.fillRect(x, GOAL_TOP, GOAL_W*(x<0?1:-1), GOAL_H);
+    ctx.strokeStyle = "rgba(255,255,255,0.9)"; ctx.lineWidth = 3;
+    ctx.strokeRect(x, GOAL_TOP, GOAL_W*(x<0?1:-1), GOAL_H);
+    // Net
+    ctx.strokeStyle = "rgba(255,255,255,0.1)"; ctx.lineWidth = 1;
+    let x0=Math.min(x, x+GOAL_W*(x<0?1:-1)), x1=Math.max(x, x+GOAL_W*(x<0?1:-1));
+    for (let y=GOAL_TOP; y<GOAL_BOT; y+=18) { ctx.beginPath(); ctx.moveTo(x0,y); ctx.lineTo(x1,y); ctx.stroke(); }
+    for (let gx=x0; gx<=x1; gx+=18)        { ctx.beginPath(); ctx.moveTo(gx,GOAL_TOP); ctx.lineTo(gx,GOAL_BOT); ctx.stroke(); }
+    ctx.restore();
+  }
+  drawGoal(-GOAL_W);
+  drawGoal(W);
+}
+
+function drawKickRange(p, rgb) {
+  let dx=ball.x-p.x, dy=ball.y-p.y, dist=Math.hypot(dx,dy);
+  let inRange = dist < KICK_RANGE;
+  ctx.save();
+  ctx.beginPath(); ctx.arc(p.x, p.y, KICK_RANGE, 0, Math.PI*2);
+  if (inRange) {
+    ctx.strokeStyle = `rgba(${rgb},0.75)`; ctx.lineWidth = 2;
+    ctx.setLineDash([]);
+    ctx.fillStyle = `rgba(${rgb},0.07)`; ctx.fill();
+  } else {
+    ctx.strokeStyle = `rgba(${rgb},0.2)`; ctx.lineWidth = 1;
+    ctx.setLineDash([5, 6]);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawPlayer(p, isBoca) {
+  ctx.save();
+  // Ground shadow
+  ctx.beginPath(); ctx.ellipse(p.x, p.y+p.r-3, p.r*0.75, 5, 0, 0, Math.PI*2);
+  ctx.fillStyle = "rgba(0,0,0,0.28)"; ctx.fill();
+  // Body fill
+  ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+  ctx.fillStyle = isBoca ? "#003f8a" : "#f0f0f0";
+  ctx.fill();
+  // Jersey detail
+  if (isBoca) {
+    ctx.save(); ctx.clip();
+    ctx.fillStyle = "#f5c518";
+    ctx.fillRect(p.x-5, p.y-p.r, 10, p.r*2);
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.strokeStyle = "#f5c518"; ctx.lineWidth = 3.5; ctx.stroke();
+  } else {
+    ctx.save(); ctx.clip();
+    ctx.strokeStyle = "#cc0000"; ctx.lineWidth = 9;
+    ctx.beginPath(); ctx.moveTo(p.x-p.r, p.y-p.r*0.25); ctx.lineTo(p.x+p.r, p.y+p.r*0.25);
+    ctx.stroke(); ctx.restore();
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.strokeStyle = "#cc0000"; ctx.lineWidth = 3.5; ctx.stroke();
+  }
+  // Shine
+  ctx.beginPath(); ctx.arc(p.x-5, p.y-6, 7, 0, Math.PI*2);
+  ctx.fillStyle = "rgba(255,255,255,0.15)"; ctx.fill();
+  ctx.restore();
+}
+
+let ballAngle = 0;
+function drawBall() {
+  let spd = Math.hypot(ball.vx, ball.vy);
+  ballAngle += spd * 0.055;
+
+  ctx.save();
+  // Shadow (offset by speed direction for sense of motion)
+  ctx.beginPath(); ctx.ellipse(ball.x+2, ball.y+ball.r-1, ball.r*0.7, 5, 0, 0, Math.PI*2);
+  ctx.fillStyle = "rgba(0,0,0,0.32)"; ctx.fill();
+
+  ctx.translate(ball.x, ball.y); ctx.rotate(ballAngle);
+  // White body
+  ctx.beginPath(); ctx.arc(0,0,ball.r,0,Math.PI*2);
+  ctx.fillStyle = "white"; ctx.fill();
+  ctx.strokeStyle = "rgba(0,0,0,0.12)"; ctx.lineWidth = 1; ctx.stroke();
+  // Panel pattern
+  ctx.strokeStyle = "rgba(30,30,30,0.28)"; ctx.lineWidth = 1.1;
+  ctx.beginPath(); ctx.moveTo(-ball.r,0); ctx.lineTo(ball.r,0); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,-ball.r); ctx.lineTo(0,ball.r); ctx.stroke();
+  ctx.beginPath(); ctx.arc(0,0,ball.r*0.55,0,Math.PI*2); ctx.stroke();
+  // Top pentagon hint
+  ctx.fillStyle = "rgba(20,20,20,0.18)";
+  ctx.beginPath(); ctx.arc(0,-4.5,4.5,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+
+  // Speed trail — faint blur smear
+  if (spd > 4) {
+    ctx.save();
+    ctx.globalAlpha = Math.min(0.18, spd*0.012);
+    let tx = ball.x - ball.vx*1.8, ty = ball.y - ball.vy*1.8;
+    ctx.beginPath(); ctx.arc(tx, ty, ball.r*0.65, 0, Math.PI*2);
+    ctx.fillStyle = "white"; ctx.fill();
+    ctx.restore();
+  }
+}
+
+function drawGoalMessage() {
+  if (goalMsgTimer <= 0) return;
+  let prog = goalMsgTimer / 220;
+  let alpha = prog < 0.15 ? prog/0.15 : prog > 0.75 ? (prog-0.75)/(0.25)*1 : 1;
+  // Slight drop-in scale
+  let sc = 1 + (1-Math.min(1,goalMsgTimer/180))*0.1;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.translate(W/2, FIELD_TOP+FIELD_H/2 - 20);
+  ctx.scale(sc, sc);
+  ctx.font = "bold 66px 'Bebas Neue', cursive";
+  ctx.textAlign = "center";
+  // Outline
+  ctx.strokeStyle = "rgba(0,0,0,0.7)"; ctx.lineWidth = 8; ctx.lineJoin = "round";
+  ctx.strokeText(goalMsg, 0, 0);
+  ctx.fillStyle = "#FFE066";
+  ctx.fillText(goalMsg, 0, 0);
+  ctx.restore();
+}
+
+function drawFlash() {
+  if (flash <= 0) return;
+  ctx.fillStyle = `rgba(${flashColor},${(flash/28)*0.35})`;
+  ctx.fillRect(0, FIELD_TOP, W, FIELD_H);
+}
+
+function loop() {
+  ctx.clearRect(0, 0, W, H);
+  if (running) update();
+  drawField();
+  drawGoals();
+  drawKickRange(player, playerIsBoca ? "245,197,24" : "204,0,0");
+  drawKickRange(ai,     playerIsBoca ? "204,0,0"    : "245,197,24");
+  drawPlayer(player, playerIsBoca);
+  drawPlayer(ai,     !playerIsBoca);
+  drawBall();
+  drawFlash();
+  drawGoalMessage();
+  // Last 30s pulse
+  if (time <= 30 && time > 0 && running) {
+    let pulse = 0.035 + 0.03*Math.sin(Date.now()*0.016);
+    ctx.fillStyle = `rgba(255,50,0,${pulse})`;
+    ctx.fillRect(0, FIELD_TOP, W, FIELD_H);
+  }
+  requestAnimationFrame(loop);
+}
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

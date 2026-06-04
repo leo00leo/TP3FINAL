@@ -213,6 +213,61 @@
             font-size: 14px;
             margin: 0;
         }
+        .haxball-section{
+            margin-top:30px;
+        }
+
+        .haxball-btn{
+
+            display:inline-flex;
+            align-items:center;
+            gap:12px;
+
+            text-decoration:none;
+
+            color:white;
+
+            font-family:"Lexend Mega",sans-serif;
+
+            padding:25px 40px;
+
+            border-radius:20px;
+
+            background:
+            linear-gradient(
+                135deg,
+                hsl(209, 66%, 41%),
+                hsl(208, 69%, 10%)
+            );
+
+            transition:.3s;
+
+            box-shadow:
+            0 6px 20px rgba(0,0,0,.4);
+        }
+
+        .haxball-btn:hover{
+
+            transform:
+            translateY(-5px)
+            scale(1.05);
+
+            box-shadow:
+            0 0 20px hsl(209, 66%, 41%),
+            0 0 40px hsl(208, 69%, 10%);
+        }
+
+        .haxball-badge{
+
+            background:rgba(255,255,255,.15);
+
+            padding:5px 10px;
+
+            border-radius:8px;
+
+            font-size:11px;
+        }
+
     </style>
 </head>
 
@@ -247,8 +302,15 @@
 
         <div class="futbol11-section">
             <a href="futbol11.html" class="futbol11-btn">
-                ⚽ Armá el XI en 1M 30S
+                ⚽ Armá el XI en 1M 30S.
                 <span class="futbol11-badge">NUEVO</span>
+            </a>
+        </div>
+        
+        <div class="haxball-section">
+            <a href="haxball.html" class="haxball-btn">
+                ⚽ Jugá al Haxball de la manera mas trucha posible.
+                <span class="haxball-badge">NUEVO</span>
             </a>
         </div>
 

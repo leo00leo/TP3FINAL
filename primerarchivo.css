@@ -254,7 +254,7 @@ button:hover::before{
     0 0 60px #0044ff;
 }
 
-/* ===== RIVER ===== */
+
 
 .river{
 
@@ -276,7 +276,7 @@ button:hover::before{
     0 0 60px red;
 }
 
-/* ===== RESULTADOS ===== */
+
 
 #resultadoRiver,
 #resultadoBoca{
@@ -289,7 +289,7 @@ button:hover::before{
     0 0 10px rgba(255,255,255,.4);
 }
 
-/* ===== FUTBOL 11 ===== */
+
 
 .futbol11-section{
     margin-top:30px;
@@ -331,8 +331,8 @@ button:hover::before{
     scale(1.05);
 
     box-shadow:
-    0 0 20px rgba(0,255,100,.5),
-    0 0 40px rgba(0,255,100,.3);
+    0 0 20px hsl(209, 66%, 41%),
+    0 0 40px hsl(208, 69%, 10%);
 }
 
 .futbol11-badge{
